@@ -44,16 +44,15 @@ public class HomePageView extends VerticalLayout {
         }
         public void newOverlay()
         {
-            LoginOverlay component = new LoginOverlay();
-            component.addLoginListener(e -> component.close());
+            LoginOverlay overlay = new LoginOverlay();
             LoginI18n i18n = LoginI18n.createDefault();
             LoginI18n.Header header = new LoginI18n.Header();
             header.setTitle("Employee Login");
             i18n.setHeader(header);
-            component.setI18n(i18n);
-            component.setOpened(true);
-            component.addLoginListener(e -> {
-                component.close();
+            overlay.setI18n(i18n);
+            overlay.setOpened(true);
+            overlay.addLoginListener(e -> {
+                overlay.close();
                 UI.getCurrent().navigate(PersonalView.class);
             });
 
