@@ -16,7 +16,7 @@ import org.springframework.stereotype.Controller;
 @CssImport("./views/about/about-view.css")
 @Controller
 
-public class PersonalView extends Div implements BeforeEnterObserver {
+public class PersonalView extends Div {
     private LoginForm loginForm = new LoginForm();
 
     public PersonalView() {
@@ -26,12 +26,6 @@ public class PersonalView extends Div implements BeforeEnterObserver {
 
     }
 
-    @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if (beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("error")) {
-            loginForm.setEnabled(true);
-            new LoginView();
-        }
-    }
+
 }
 
