@@ -24,6 +24,7 @@ public class PersonalView extends Div {
         add(new Text("HÄR SKA ALLT ADMINRELATERAT SKE"));
 
 
+
     }
 
 

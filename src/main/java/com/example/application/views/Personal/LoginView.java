@@ -20,8 +20,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
 
-        loginForm.setAction("login");
-
         add(new H1("JavaBiografen Personal"), loginForm);
     }
 
@@ -30,5 +28,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         if (beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("error")) {
             loginForm.setEnabled(true);
         }
+
     }
 }

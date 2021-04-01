@@ -72,6 +72,7 @@ public class HomePageView extends VerticalLayout {
             header.setTitle("Employee Login");
             i18n.setHeader(header);
             overlay.setI18n(i18n);
+            overlay.setAction("login");
             overlay.setOpened(true);
             overlay.addLoginListener(e -> {
                 overlay.close();
