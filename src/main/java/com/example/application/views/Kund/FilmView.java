@@ -15,7 +15,6 @@ import javax.persistence.Entity;
 @Route(value = "/film", layout = HomePage.class)
 @PageTitle("Välj en film")
 @CssImport("./views/helloworld/hello-world-view.css")
-@Entity
 public class FilmView extends HorizontalLayout {
 
     public FilmView(){

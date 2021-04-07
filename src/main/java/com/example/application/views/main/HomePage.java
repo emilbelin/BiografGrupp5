@@ -18,7 +18,6 @@ import javax.persistence.Entity;
 
 @PageTitle("Välj ett alternativ")
 @CssImport("./views/helloworld/hello-world-view.css")
-@Entity
 
 public class HomePage extends AppLayout {
 
