@@ -1,4 +1,4 @@
-package com.example.application.Backend;
+package com.example.application.Backend.Kund;
 
 public class Kund {
 
