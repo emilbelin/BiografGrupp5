@@ -1,37 +1,45 @@
 package com.example.application.views.Kund;
-import com.example.application.Backend.KundService;
-import com.example.application.Backend.Kund;
+import com.example.application.Backend.Film.Film;
+import com.example.application.Backend.Film.FilmService;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
-import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.component.notification.Notification;
 
 
-@Route("")
+@Route("film")
 @PageTitle("Välj en film")
 @CssImport("./views/helloworld/hello-world-view.css")
 public class FilmView extends VerticalLayout {
 
-    private KundService kundService;
-    private Grid<Kund> grid = new Grid<>(Kund.class);
-    private BokningsForm form;
+    private FilmService filmService;
+    private Grid<Film> grid = new Grid<>(Film.class);
+    SingleSelect<Grid<Film>, Film> selection = grid.asSingleSelect();
+    private FilmForm form;
 
-    public FilmView(KundService kundService) {
-        this.kundService = kundService;
+    public FilmView(FilmService filmService) {
+        this.filmService = filmService;
         setSizeFull();
-        grid.setSizeFull();
-        grid.setColumns("fornamn", "efternamn", "telefonnummer");
-        form = new BokningsForm();
-        Div content = new Div(grid, form);
-        content.setSizeFull();
-        add(content);
+        HorizontalLayout test = new HorizontalLayout();
+        //grid.setColumns("fornamn", "efternamn", "telefonnummer");
+        grid.setColumns("titel", "sprak", "aldergrans", "genre", "langd");
+        grid.getColumnByKey("titel").setHeader("Titel");
+        grid.getColumnByKey("sprak").setHeader("Språk");
+        grid.getColumnByKey("aldergrans").setHeader("Åldersgräns");
+        grid.getColumnByKey("genre").setHeader("Genre");
+        grid.getColumnByKey("langd").setHeader("Längd");
+        form = new FilmForm(filmService, this);
+        add(test, grid, form);
         updateList();
-    }
 
-    private void updateList()
+    }
+    public void updateList()
     {
-        grid.setItems(kundService.findAll());
+        grid.setItems(filmService.findAll());
     }
 }
