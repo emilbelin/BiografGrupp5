@@ -1,9 +1,9 @@
-package com.example.application.views.Kund;
+package com.example.application.forms;
 
-import com.example.application.Backend.Film.Film;
-import com.example.application.Backend.Film.FilmService;
+import com.example.application.Backend.model.Film;
+import com.example.application.Backend.service.FilmService;
+import com.example.application.views.Personal.FilmView;
 import com.vaadin.flow.component.Key;
-import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.formlayout.FormLayout;
@@ -11,9 +11,6 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
-import com.vaadin.flow.data.binder.ValidationException;
-
-import java.awt.*;
 
 public class FilmForm extends FormLayout {
     FilmService filmService;
@@ -65,7 +62,7 @@ public class FilmForm extends FormLayout {
     }
     private void deleteAndUpdate()
     {
-        filmService.delete(filmView.selection.getValue().getTitel());
+        filmService.delete(filmView.getSelection().getTitel());
         filmView.updateList();
     }
 

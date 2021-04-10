@@ -18,7 +18,7 @@ import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.server.PWA;
 import com.vaadin.flow.router.PageTitle;
-import com.example.application.views.Kund.FilmView;
+import com.example.application.views.Personal.FilmView;
 import com.example.application.views.Personal.PersonalView;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.CssImport;

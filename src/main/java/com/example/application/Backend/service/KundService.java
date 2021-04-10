@@ -1,6 +1,6 @@
-package com.example.application.Backend.Kund;
+package com.example.application.Backend.service;
 
-import com.example.application.Backend.Kund.Kund;
+import com.example.application.Backend.model.Kund;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;

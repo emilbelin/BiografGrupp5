@@ -1,4 +1,4 @@
-package com.example.application.Backend.Film;
+package com.example.application.Backend.model;
 
 public class Film {
 

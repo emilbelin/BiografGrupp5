@@ -1,6 +1,6 @@
-package com.example.application.Backend.Film;
+package com.example.application.Backend.service;
 
-import com.example.application.Backend.Film.Film;
+import com.example.application.Backend.model.Film;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
