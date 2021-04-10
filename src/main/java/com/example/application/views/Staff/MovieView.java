@@ -1,28 +1,26 @@
-package com.example.application.views.Personal;
-import com.example.application.Backend.model.Film;
-import com.example.application.Backend.service.FilmService;
+package com.example.application.views.Staff;
+import com.example.application.Backend.model.Movie;
+import com.example.application.Backend.service.MovieService;
 import com.example.application.forms.FilmForm;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.router.Route;
 
 
-@Route("film")
-@PageTitle("Välj en film")
-@CssImport("./views/helloworld/hello-world-view.css")
-public class FilmView extends VerticalLayout {
+@Route(value = "", layout = StaffLayout.class)
+@PageTitle("Lägg till/ta bort filmer")
+public class MovieView extends VerticalLayout {
 
-    private FilmService filmService;
-    private Grid<Film> grid = new Grid<>(Film.class);
-    protected SingleSelect<Grid<Film>, Film> selection = grid.asSingleSelect();
+    private MovieService movieService;
+    private Grid<Movie> grid = new Grid<>(Movie.class);
+    protected SingleSelect<Grid<Movie>, Movie> selection = grid.asSingleSelect();
     private FilmForm form;
 
-    public FilmView(FilmService filmService) {
-        this.filmService = filmService;
+    public MovieView(MovieService movieService) {
+        this.movieService = movieService;
         setSizeFull();
         HorizontalLayout test = new HorizontalLayout();
         //grid.setColumns("fornamn", "efternamn", "telefonnummer");
@@ -31,17 +29,17 @@ public class FilmView extends VerticalLayout {
         grid.getColumnByKey("sprak").setHeader("Språk");
         grid.getColumnByKey("aldergrans").setHeader("Åldersgräns");
         grid.getColumnByKey("genre").setHeader("Genre");
-        grid.getColumnByKey("langd").setHeader("Längd");
-        form = new FilmForm(filmService, this);
+        grid.getColumnByKey("langd").setHeader("Längd(Minuter)");
+        form = new FilmForm(movieService, this);
         add(test, grid, form);
         updateList();
 
     }
 
     /**
-     * @return the Film object that is currently selected in the grid
+     * @return the Movie object that is currently selected in the grid
      */
-    public Film getSelection()
+    public Movie getSelection()
     {
         return selection.getValue();
     }
@@ -49,10 +47,10 @@ public class FilmView extends VerticalLayout {
 
     /**
      * Fills the grid with data from the mySQL database.
-     * FilmService.findAll() runs a query and returns a list of objects from the DB.
+     * MovieService.findAll() runs a query and returns a list of objects from the DB.
      */
     public void updateList()
     {
-        grid.setItems(filmService.findAll());
+        grid.setItems(movieService.findAll());
     }
 }

@@ -1,8 +1,8 @@
 package com.example.application.forms;
 
-import com.example.application.Backend.model.Film;
-import com.example.application.Backend.service.FilmService;
-import com.example.application.views.Personal.FilmView;
+import com.example.application.Backend.model.Movie;
+import com.example.application.Backend.service.MovieService;
+import com.example.application.views.Staff.MovieView;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -13,36 +13,39 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 
 public class FilmForm extends FormLayout {
-    FilmService filmService;
-    FilmView filmView;
+    MovieService movieService;
+    MovieView movieView;
     TextField titel = new TextField("Titel");
     TextField sprak = new TextField("Språk");
     TextField aldersgrans = new TextField("Åldersgräns");
     TextField genre = new TextField("Genre");
-    IntegerField langd = new IntegerField("Längd");
-    private Binder<Film> binder = new Binder<>(Film.class);
+    IntegerField langd = new IntegerField("Längd(Minuter)");
+    private Binder<Movie> binder = new Binder<>(Movie.class);
 
     //ComboBox<Bokning.Betalning> betalning = new ComboBox<>("Betalningsalternativ");
 
 
-    Button add = new Button("Lägg till film");
-    Button cancel = new Button("Avbryt");
+    Button add = new Button("Lägg till Film");
     Button delete = new Button("Ta bort");
-    Film film = new Film("", "", "", "", 0);
+    Button edit = new Button("Redigera");
+    Button save = new Button("Spara");
+    Movie movie = new Movie("", "", "", "", 0);
 
 
-    public FilmForm(FilmService filmService, FilmView filmView)
+    public FilmForm(MovieService movieService, MovieView movieView)
     {
-        this.filmService = filmService;
-        this.filmView = filmView;
-        binder.forField(titel).bind(Film::getTitel,Film::setTitel);
-        binder.forField(sprak).bind(Film::getSprak,Film::setSprak);
-        binder.forField(aldersgrans).bind(Film::getAldergrans,Film::setAldergrans);
-        binder.forField(genre).bind(Film::getGenre, Film::setGenre);
-        binder.forField(langd).bind(Film::getLangd, Film::setLangd);
-        binder.setBean(film);
+        this.movieService = movieService;
+        this.movieView = movieView;
+        binder.forField(titel).bind(Movie::getTitel, Movie::setTitel);
+        binder.forField(sprak).bind(Movie::getSprak, Movie::setSprak);
+        binder.forField(aldersgrans).bind(Movie::getAldergrans, Movie::setAldergrans);
+        binder.forField(genre).bind(Movie::getGenre, Movie::setGenre);
+        binder.forField(langd).bind(Movie::getLangd, Movie::setLangd);
+        binder.setBean(movie);
         add.addClickListener(event -> addAndUpdate());
         delete.addClickListener(event -> deleteAndUpdate());
+        edit.addClickListener(event -> editMovie());
+        save.addClickListener(event -> saveMovie());
         addClassName("boknings-form");
         add(
                 titel,
@@ -57,26 +60,37 @@ public class FilmForm extends FormLayout {
     }
     private void addAndUpdate()
     {
-        filmService.addFilm(film);
-        filmView.updateList();
+        movieService.addMovie(movie);
+        movieView.updateList();
     }
     private void deleteAndUpdate()
     {
-        filmService.delete(filmView.getSelection().getTitel());
-        filmView.updateList();
+        movieService.delete(movieView.getSelection().getTitel());
+        movieView.updateList();
+    }
+    private void editMovie()
+    {
+        movie = movieView.getSelection();
+        binder.setBean(movie);
+    }
+    private void saveMovie()
+    {
+        movieService.saveMovie(movie);
+        movieView.updateList();
     }
 
 
     private HorizontalLayout createButtonLayout()
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        edit.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        save.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-        cancel.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
         add.addClickShortcut(Key.ENTER);
-        cancel.addClickShortcut(Key.ESCAPE);
+        delete.addClickShortcut(Key.DELETE);
 
-        return new HorizontalLayout(add, delete, cancel);
+        return new HorizontalLayout(add, edit, save, delete);
     }
 
 }

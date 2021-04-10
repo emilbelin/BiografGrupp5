@@ -1,10 +1,10 @@
 package com.example.application.Backend.model;
 
-public class Kund {
+public class Customer {
 
     private String fornamn, efternamn, telefonnummer;
 
-    public Kund(String fornamn, String efternamn, String telefonnummer)
+    public Customer(String fornamn, String efternamn, String telefonnummer)
     {
         this.fornamn = fornamn;
         this.efternamn = efternamn;

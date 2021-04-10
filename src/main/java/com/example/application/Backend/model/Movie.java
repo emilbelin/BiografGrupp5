@@ -1,6 +1,6 @@
 package com.example.application.Backend.model;
 
-public class Film {
+public class Movie {
 
     private String titel;
     private String sprak;
@@ -8,7 +8,7 @@ public class Film {
     private String genre;
     private int langd;
 
-    public Film(String titel, String sprak, String aldergrans, String genre, int langd)
+    public Movie(String titel, String sprak, String aldergrans, String genre, int langd)
     {
 
         this.titel = titel;

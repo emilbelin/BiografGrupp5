@@ -1,4 +1,4 @@
-package com.example.application.views.Personal;
+package com.example.application.views.Login;
 
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
