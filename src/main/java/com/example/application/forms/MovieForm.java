@@ -110,19 +110,34 @@ public class MovieForm extends FormLayout {
             buttonLayout = buttonsEditing();
             movie = movieView.getSelection();
             binder.setBean(movie);
+            form.add(
+                    titel,
+                    sprak,
+                    aldersgrans,
+                    genre,
+                    langd,
+                    buttonLayout
+            );
         }
-        else
+        else if(state == formState.adding)
         {
+            clearMovie();
             buttonLayout = buttonsAdding();
-        }
-        form.add(
+            form.add(
                 titel,
                 sprak,
                 aldersgrans,
                 genre,
                 langd,
                 buttonLayout
-        );
+             );
+        }
+        else
+        {
+            form.setVisible(false);
+        }
+
+
     }
 
     public void configureBinder()

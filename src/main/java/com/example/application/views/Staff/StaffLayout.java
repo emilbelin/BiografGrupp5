@@ -41,9 +41,9 @@ public class StaffLayout extends AppLayout {
         RouterLink filmLink = new RouterLink("Filmer", MovieView.class);
         filmLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        RouterLink cinemaLink = new RouterLink("Biografer", CinemaView.class);
-        cinemaLink.setHighlightCondition(HighlightConditions.sameLocation());
+        RouterLink scheduleLink = new RouterLink("Schema", ScheduleView.class);
+        scheduleLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        addToDrawer(new VerticalLayout(showsLink, filmLink, cinemaLink));
+        addToDrawer(new VerticalLayout(showsLink, filmLink, scheduleLink));
     }
 }

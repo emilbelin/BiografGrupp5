@@ -17,21 +17,23 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Lägg till/ta bort filmer")
 public class MovieView extends VerticalLayout {
 
-    MovieService movieService;
-    MovieForm form;
+    protected MovieService movieService;
+    protected MovieForm form;
 
-    Grid<Movie> grid = new Grid<>(Movie.class);
-    SingleSelect<Grid<Movie>, Movie> selection = grid.asSingleSelect();
-    Button delete = new Button("Ta bort");
-    Button add = new Button("Lägg till");
-    public MovieView(MovieService movieService) {
+    protected Grid<Movie> grid = new Grid<>(Movie.class);
+    protected SingleSelect<Grid<Movie>, Movie> selection = grid.asSingleSelect();
 
+    protected Button delete = new Button("Ta bort");
+    protected Button add = new Button("Lägg till");
+    public MovieView(MovieService movieService)
+    {
+
+        this.movieService = movieService;
         form = new MovieForm(movieService,  this);
         form.setVisible(false);
 
         configureButtons();
 
-        this.movieService = movieService;
 
         setSizeFull();
 
@@ -45,7 +47,7 @@ public class MovieView extends VerticalLayout {
         grid.getColumnByKey("aldergrans").setHeader("Åldersgräns");
         grid.getColumnByKey("genre").setHeader("Genre");
         grid.getColumnByKey("langd").setHeader("Längd(Minuter)");
-        grid.asSingleSelect().addValueChangeListener(event -> formVisibility(true, formState.editing));
+        grid.asSingleSelect().addValueChangeListener(event -> selectionHandler());
         add(buttonLayout,grid, form);
         updateList();
 
@@ -94,5 +96,16 @@ public class MovieView extends VerticalLayout {
             form.editMovie();
         }
 
+    }
+
+    public void selectionHandler()
+    {
+        if(selection.isEmpty()) {
+            formVisibility(false, formState.none);
+        }
+        else
+        {
+            formVisibility(true, formState.editing);
+        }
     }
 }

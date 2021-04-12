@@ -10,7 +10,6 @@ public class Movie {
 
     public Movie(String titel, String sprak, String aldergrans, String genre, int langd)
     {
-
         this.titel = titel;
         this.sprak = sprak;
         this.aldergrans = aldergrans;
