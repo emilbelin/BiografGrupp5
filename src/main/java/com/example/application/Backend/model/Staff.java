@@ -26,6 +26,7 @@ public class Staff {
         name = this.fornamn + " " + this.efternamn;
         return name;
     }
+
     public String getFullName()
     {
         return fornamn + " " + efternamn;

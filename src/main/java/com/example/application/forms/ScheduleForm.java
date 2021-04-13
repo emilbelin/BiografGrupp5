@@ -35,6 +35,7 @@ public class ScheduleForm extends FormLayout {
     protected Staff staff;
     protected ScheduleObject schedule = new ScheduleObject(null,null,null, null);
 
+    protected List<ScheduleObject> scheduleObjectList = new ArrayList<>();
     protected ComboBox<Staff> staffPicker = new ComboBox<>("Personal");
     protected ComboBox<Skift> skiftPicker = new ComboBox<>("Skift");
     protected ComboBox<Station> stationPicker = new ComboBox<>("Station");
@@ -117,12 +118,22 @@ public class ScheduleForm extends FormLayout {
         stationList.add(Station.TICKET);
         stationList.add(Station.CASHREGISTER);
     }
+    public List<ScheduleObject> getList()
+    {
+        return scheduleObjectList;
+    }
+    private void addSchedule()
+    {
+       scheduleObjectList.add(new ScheduleObject(staffPicker.getValue(),datePicker.getValue(),skiftPicker.getValue(),stationPicker.getValue()));
+       scheduleView.populateGrid();
+    }
     private void closeForm()
     {
         this.setVisible(false);
     }
     public void configureButtonListener()
     {
+        add.addClickListener(event -> addSchedule());
         // save.addClickListener(event -> saveSchedule());
         cancel.addClickListener(event -> closeForm());
     }

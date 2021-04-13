@@ -55,7 +55,7 @@ public class ScheduleView extends VerticalLayout {
 
     public void populateGrid()
     {
-
+        grid.setItems(form.getList());
     }
     public ScheduleObject getSelection()
     {
