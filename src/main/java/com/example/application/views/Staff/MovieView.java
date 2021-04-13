@@ -1,7 +1,10 @@
 package com.example.application.views.Staff;
 import com.example.application.Backend.model.Movie;
 import com.example.application.Backend.service.MovieService;
-import com.example.application.forms.FilmForm;
+import com.example.application.forms.MovieForm;
+import com.example.application.forms.formState;
+import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,24 +17,38 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Lägg till/ta bort filmer")
 public class MovieView extends VerticalLayout {
 
-    private MovieService movieService;
-    private Grid<Movie> grid = new Grid<>(Movie.class);
-    protected SingleSelect<Grid<Movie>, Movie> selection = grid.asSingleSelect();
-    private FilmForm form;
+    protected MovieService movieService;
+    protected MovieForm form;
 
-    public MovieView(MovieService movieService) {
+    protected Grid<Movie> grid = new Grid<>(Movie.class);
+    protected SingleSelect<Grid<Movie>, Movie> selection = grid.asSingleSelect();
+
+    protected Button delete = new Button("Ta bort");
+    protected Button add = new Button("Lägg till");
+    public MovieView(MovieService movieService)
+    {
+
         this.movieService = movieService;
+        form = new MovieForm(movieService,  this);
+        form.setVisible(false);
+
+        configureButtons();
+
+
         setSizeFull();
-        HorizontalLayout test = new HorizontalLayout();
-        //grid.setColumns("fornamn", "efternamn", "telefonnummer");
+
+        HorizontalLayout buttonLayout = new HorizontalLayout();
+
+        buttonLayout.add(add,delete);
+
         grid.setColumns("titel", "sprak", "aldergrans", "genre", "langd");
         grid.getColumnByKey("titel").setHeader("Titel");
         grid.getColumnByKey("sprak").setHeader("Språk");
         grid.getColumnByKey("aldergrans").setHeader("Åldersgräns");
         grid.getColumnByKey("genre").setHeader("Genre");
         grid.getColumnByKey("langd").setHeader("Längd(Minuter)");
-        form = new FilmForm(movieService, this);
-        add(test, grid, form);
+        grid.asSingleSelect().addValueChangeListener(event -> selectionHandler());
+        add(buttonLayout,grid, form);
         updateList();
 
     }
@@ -52,5 +69,43 @@ public class MovieView extends VerticalLayout {
     public void updateList()
     {
         grid.setItems(movieService.findAll());
+    }
+
+    public void configureButtons()
+    {
+        add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        add.addClickListener(event -> formVisibility(true, formState.adding));
+        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        delete.addClickListener(event -> form.deleteAndUpdate());
+    }
+
+    public void formVisibility(Boolean bool, formState state)
+    {
+            form.setVisible(bool);
+            form.configureForm(state, form);
+    }
+
+    public void editFormObject()
+    {
+        if(selection.getValue() == null)
+        {
+            form.setVisible(false);
+        }
+        else {
+            formVisibility(true, formState.editing);
+            form.editMovie();
+        }
+
+    }
+
+    public void selectionHandler()
+    {
+        if(selection.isEmpty()) {
+            formVisibility(false, formState.none);
+        }
+        else
+        {
+            formVisibility(true, formState.editing);
+        }
     }
 }

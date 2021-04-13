@@ -6,7 +6,9 @@ import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.router.HighlightCondition;
 import com.vaadin.flow.router.HighlightConditions;
+import com.vaadin.flow.router.Router;
 import com.vaadin.flow.router.RouterLink;
 
 @CssImport("./styles/shared-styles.js")
@@ -33,12 +35,15 @@ public class StaffLayout extends AppLayout {
 
     private void createDrawer()
     {
-        RouterLink forestallningarLink = new RouterLink("Föreställningar", ShowsView.class);
-        forestallningarLink.setHighlightCondition(HighlightConditions.sameLocation());
+        RouterLink showsLink = new RouterLink("Föreställningar", ShowsView.class);
+        showsLink.setHighlightCondition(HighlightConditions.sameLocation());
 
         RouterLink filmLink = new RouterLink("Filmer", MovieView.class);
         filmLink.setHighlightCondition(HighlightConditions.sameLocation());
 
-        addToDrawer(new VerticalLayout(forestallningarLink, filmLink));
+        RouterLink scheduleLink = new RouterLink("Schema", ScheduleView.class);
+        scheduleLink.setHighlightCondition(HighlightConditions.sameLocation());
+
+        addToDrawer(new VerticalLayout(showsLink, filmLink, scheduleLink));
     }
 }
