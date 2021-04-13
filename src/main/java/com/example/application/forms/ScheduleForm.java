@@ -66,7 +66,7 @@ public class ScheduleForm extends FormLayout {
         if(state == formState.editing)
         {
             buttonLayout = buttonsEditing();
-            schedule = scheduleView.getSelection();
+           // schedule = scheduleView.getSelection();
             binder.setBean(schedule);
             form.add(
                     staffPicker, skiftPicker, stationPicker, datePicker, buttonLayout

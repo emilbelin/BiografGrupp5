@@ -1,7 +1,9 @@
 package com.example.application.views.Staff;
 
 import com.example.application.Backend.model.ScheduleObject;
+import com.example.application.Backend.model.StaffSchedule;
 import com.example.application.Backend.service.ScheduleService;
+import com.example.application.Backend.service.StaffScheduleService;
 import com.example.application.Backend.service.StaffService;
 import com.example.application.forms.ScheduleForm;
 import com.example.application.forms.formState;
@@ -18,18 +20,20 @@ import java.awt.*;
 @Route(value = "Schedule", layout = StaffLayout.class)
 public class ScheduleView extends VerticalLayout {
 
-    protected Grid<ScheduleObject> grid = new Grid<>(ScheduleObject.class);
-    protected SingleSelect<Grid<ScheduleObject>, ScheduleObject> selection = grid.asSingleSelect();
+    protected Grid<StaffSchedule> grid = new Grid<>(StaffSchedule.class);
+    protected SingleSelect<Grid<StaffSchedule>, StaffSchedule> selection = grid.asSingleSelect();
 
 
     protected Button add = new Button("Lägg till");
     protected Button delete = new Button("Ta bort");
 
     protected ScheduleService scheduleService;
+    protected StaffScheduleService staffScheduleService;
     protected ScheduleForm form;
     protected StaffService staffService;
-    public ScheduleView(ScheduleService scheduleService, StaffService staffService)
+    public ScheduleView(StaffService staffService, ScheduleService scheduleService, StaffScheduleService staffScheduleService)
     {
+        this.staffScheduleService = staffScheduleService;
         this.staffService = staffService;
         this.scheduleService = scheduleService;
         form = new ScheduleForm(staffService, this);
@@ -43,21 +47,25 @@ public class ScheduleView extends VerticalLayout {
 
         buttonLayout.add(add, delete);
 
-        grid.setColumns("staff", "date", "skift", "station");
+        grid.setColumns("fornamn", "efternamn", "station", "datum", "skiftstart", "skiftslut");
 
-        grid.getColumnByKey("staff").setHeader("Person");
-        grid.getColumnByKey("date").setHeader("Datum");
-        grid.getColumnByKey("skift").setHeader("Tid");
+        grid.getColumnByKey("fornamn").setHeader("Förnamn");
+        grid.getColumnByKey("efternamn").setHeader("Efternamn");
         grid.getColumnByKey("station").setHeader("Station");
+        grid.getColumnByKey("datum").setHeader("Datum");
+        grid.getColumnByKey("skiftstart").setHeader("Skift Start");
+        grid.getColumnByKey("skiftslut").setHeader("Skift Slut");
+
 
         add(buttonLayout,grid,form);
+        populateGrid();
     }
 
     public void populateGrid()
     {
-        grid.setItems(form.getList());
+        grid.setItems(staffScheduleService.findScheduleList());
     }
-    public ScheduleObject getSelection()
+    public StaffSchedule getSelection()
     {
         return selection.getValue();
     }
