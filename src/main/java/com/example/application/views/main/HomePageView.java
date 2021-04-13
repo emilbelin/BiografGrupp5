@@ -15,12 +15,17 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.PreserveOnRefresh;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 
 import java.awt.*;
 
+import static com.vaadin.flow.component.UI.getCurrent;
+
 @Route(value = "")
 @PageTitle("Biografen")
+@VaadinSessionScope
 public class HomePageView extends VerticalLayout {
 
 
@@ -47,7 +52,7 @@ public class HomePageView extends VerticalLayout {
 
 
         button.addClickListener( e -> newOverlay());
-        button1.addClickListener( e -> UI.getCurrent().navigate(FilmView.class));
+        button1.addClickListener( e -> getCurrent().navigate(FilmView.class));
         layout.setVerticalComponentAlignment(Alignment.CENTER, button);
         layout.setVerticalComponentAlignment(Alignment.CENTER, button1);
         vlay.setHorizontalComponentAlignment(Alignment.CENTER,button);

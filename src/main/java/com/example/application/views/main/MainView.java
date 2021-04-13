@@ -29,6 +29,7 @@ import com.vaadin.flow.component.dependency.CssImport;
 @PWA(name = "My App", shortName = "My App", enableInstallPrompt = false)
 @JsModule("./styles/shared-styles.js")
 @CssImport("./views/main/main-view.css")
+
 public class MainView extends AppLayout {
 
     private final Tabs menu;
