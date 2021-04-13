@@ -96,11 +96,6 @@ public class ScheduleForm extends FormLayout {
         return new HorizontalLayout(save, clear);
     }
 
-    public void clearSchedule()
-    {
-        schedule = new ScheduleObject(null, null,null, null);
-        //binder.setBean(schedule);
-    }
     private void configureButtons()
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -122,6 +117,11 @@ public class ScheduleForm extends FormLayout {
     {
         return scheduleObjectList;
     }
+    public void clearSchedule()
+    {
+        schedule = new ScheduleObject(null, null,null, null);
+        binder.setBean(schedule);
+    }
     private void addSchedule()
     {
        scheduleObjectList.add(new ScheduleObject(staffPicker.getValue(),datePicker.getValue(),skiftPicker.getValue(),stationPicker.getValue()));
@@ -135,6 +135,7 @@ public class ScheduleForm extends FormLayout {
     {
         add.addClickListener(event -> addSchedule());
         // save.addClickListener(event -> saveSchedule());
+        clear.addClickListener(event -> clearSchedule());
         cancel.addClickListener(event -> closeForm());
     }
     private void configureComboBoxes()

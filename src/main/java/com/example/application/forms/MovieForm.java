@@ -84,7 +84,7 @@ public class MovieForm extends FormLayout {
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         edit.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
-        save.addThemeVariants(ButtonVariant.LUMO_CONTRAST);
+        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         clear.addThemeVariants(ButtonVariant.LUMO_ERROR);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
     }
