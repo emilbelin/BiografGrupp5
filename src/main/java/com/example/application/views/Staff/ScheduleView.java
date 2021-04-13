@@ -36,7 +36,7 @@ public class ScheduleView extends VerticalLayout {
         this.staffScheduleService = staffScheduleService;
         this.staffService = staffService;
         this.scheduleService = scheduleService;
-        form = new ScheduleForm(staffService, this);
+        form = new ScheduleForm(staffService,this, staffScheduleService);
         form.setVisible(false);
 
         configureButtons();
@@ -47,7 +47,7 @@ public class ScheduleView extends VerticalLayout {
 
         buttonLayout.add(add, delete);
 
-        grid.setColumns("fornamn", "efternamn", "station", "datum", "skiftstart", "skiftslut");
+        grid.setColumns("fornamn", "efternamn", "station", "datum", "skiftstart", "skiftslut", "schema_id");
 
         grid.getColumnByKey("fornamn").setHeader("Förnamn");
         grid.getColumnByKey("efternamn").setHeader("Efternamn");
@@ -55,6 +55,7 @@ public class ScheduleView extends VerticalLayout {
         grid.getColumnByKey("datum").setHeader("Datum");
         grid.getColumnByKey("skiftstart").setHeader("Skift Start");
         grid.getColumnByKey("skiftslut").setHeader("Skift Slut");
+        grid.getColumnByKey("schema_id").setHeader("ID");
 
 
         add(buttonLayout,grid,form);
@@ -74,6 +75,7 @@ public class ScheduleView extends VerticalLayout {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
+        delete.addClickListener(event ->form.deleteAndUpdate());
         add.addClickListener(event -> formVisibility(true, formState.adding));
     }
     public void formVisibility(Boolean bool, formState state)

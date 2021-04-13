@@ -1,26 +1,28 @@
 package com.example.application.Backend.model;
 
-public enum Station {
-    CLEANING("Städ"),
-    CASHREGISTER("Kassa"),
-    TICKET("Biljettkontroll"),
-    MOVIECHANGE("Filmbyte"),
-    MISC("Övrigt");
+public class Station {
 
-    private String value;
+    private int id;
+    private String namn;
 
-    Station(String value)
-    {
-        this.value = value;
+    public Station(int id, String namn) {
+        this.id = id;
+        this.namn = namn;
     }
 
-    public String getValue() {
-        return value;
+    public int getId() {
+        return id;
     }
 
-    @Override
-    public String toString()
-    {
-        return value;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNamn() {
+        return namn;
+    }
+
+    public void setNamn(String namn) {
+        this.namn = namn;
     }
 }

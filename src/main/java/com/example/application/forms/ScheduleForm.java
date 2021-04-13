@@ -1,6 +1,7 @@
 package com.example.application.forms;
 
 import com.example.application.Backend.model.*;
+import com.example.application.Backend.service.StaffScheduleService;
 import com.example.application.Backend.service.StaffService;
 import com.example.application.views.Staff.ScheduleView;
 import com.vaadin.flow.component.HasValue;
@@ -24,6 +25,7 @@ public class ScheduleForm extends FormLayout {
     protected List<Skift> skiftList = new ArrayList<>();
     protected List<Station> stationList = new ArrayList<>();
     protected StaffService staffService;
+    protected StaffScheduleService staffScheduleService;
     protected ScheduleView scheduleView;
 
     protected  Binder<ScheduleObject> binder = new Binder<>(ScheduleObject.class);
@@ -41,11 +43,11 @@ public class ScheduleForm extends FormLayout {
     protected ComboBox<Station> stationPicker = new ComboBox<>("Station");
     protected DatePicker datePicker = new DatePicker("Datum");
     protected HorizontalLayout buttonLayout = new HorizontalLayout();
-    public ScheduleForm(StaffService staffService, ScheduleView scheduleView)
+    public ScheduleForm(StaffService staffService, ScheduleView scheduleView, StaffScheduleService staffScheduleService)
     {
+        this.staffScheduleService = staffScheduleService;
         this.staffService = staffService;
         this.scheduleView = scheduleView;
-        configureEnums();
         configureBinder();
         configureButtons();
         configureButtonListener();
@@ -103,16 +105,8 @@ public class ScheduleForm extends FormLayout {
         cancel.addThemeVariants(ButtonVariant.LUMO_ERROR);
         clear.addThemeVariants(ButtonVariant.LUMO_ERROR);
     }
-    private void configureEnums()
-    {
-        skiftList.add(Skift.DAG);
-        skiftList.add(Skift.KVÄLL);
-        stationList.add(Station.MOVIECHANGE);
-        stationList.add(Station.CLEANING);
-        stationList.add(Station.MISC);
-        stationList.add(Station.TICKET);
-        stationList.add(Station.CASHREGISTER);
-    }
+
+
     public List<ScheduleObject> getList()
     {
         return scheduleObjectList;
@@ -122,10 +116,22 @@ public class ScheduleForm extends FormLayout {
         schedule = new ScheduleObject(null, null,null, null);
         binder.setBean(schedule);
     }
+    public void deleteAndUpdate()
+    {
+        staffScheduleService.deleteSchedule(scheduleView.getSelection().getSchema_id());
+        scheduleView.populateGrid();
+    }
     private void addSchedule()
     {
-       scheduleObjectList.add(new ScheduleObject(staffPicker.getValue(),datePicker.getValue(),skiftPicker.getValue(),stationPicker.getValue()));
-       scheduleView.populateGrid();
+
+        //storedProcedure med parameter
+        staffScheduleService.addToScheme(
+                datePicker.getValue(),
+                staffPicker.getValue().getId(),
+                stationPicker.getValue().getId(),
+                skiftPicker.getValue().getSkift_id());
+
+        scheduleView.populateGrid();
     }
     private void closeForm()
     {
@@ -154,9 +160,9 @@ public class ScheduleForm extends FormLayout {
             }
         });
         skiftPicker.setItemLabelGenerator(Skift::getValue);
-        skiftPicker.setItems(skiftList);
-        stationPicker.setItemLabelGenerator(Station::getValue);
-        stationPicker.setItems(stationList);
+        skiftPicker.setItems(staffScheduleService.findSkift());
+        stationPicker.setItemLabelGenerator(Station::getNamn);
+        stationPicker.setItems(staffScheduleService.findStation());
     }
 
 }

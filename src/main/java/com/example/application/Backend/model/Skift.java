@@ -1,28 +1,46 @@
 package com.example.application.Backend.model;
 
 
-import com.example.application.Backend.service.ScheduleService;
+public class Skift
+{
+    private int skift_id;
+    private String start;
+    private String slut;
 
-import java.util.List;
-
-public enum Skift {
-    DAG("11.00 - 19.00"),
-    KVÄLL("18.00 - 02.00");
-
-    private String value;
-
-    Skift(String value)
-    {
-        this.value = value;
+    public Skift(int skift_id, String start, String slut) {
+        this.skift_id = skift_id;
+        this.start = start;
+        this.slut = slut;
     }
 
-    public String getValue() {
-        return value;
+    public String getValue()
+    {
+        String shiftTotal = "";
+        shiftTotal = start + " - " + slut;
+        return shiftTotal;
     }
 
-    @Override
-    public String toString()
-    {
-        return value;
+    public int getSkift_id() {
+        return skift_id;
+    }
+
+    public void setSkift_id(int skift_id) {
+        this.skift_id = skift_id;
+    }
+
+    public String getStart() {
+        return start;
+    }
+
+    public void setStart(String start) {
+        this.start = start;
+    }
+
+    public String getSlut() {
+        return slut;
+    }
+
+    public void setSlut(String slut) {
+        this.slut = slut;
     }
 }

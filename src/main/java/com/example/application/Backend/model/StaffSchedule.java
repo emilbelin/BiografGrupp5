@@ -3,14 +3,23 @@ package com.example.application.Backend.model;
 public class StaffSchedule {
 
     private String fornamn, efternamn, station, datum, skiftstart, skiftslut;
-
-    public StaffSchedule(String fornamn, String efternamn, String station, String datum, String skiftstart, String skiftslut) {
+    private int schema_id;
+    public StaffSchedule(String fornamn, String efternamn, String station, String datum, String skiftstart, String skiftslut, int schema_id) {
         this.fornamn = fornamn;
         this.efternamn = efternamn;
         this.station = station;
         this.datum = datum;
         this.skiftstart = skiftstart;
         this.skiftslut = skiftslut;
+        this.schema_id = schema_id;
+    }
+
+    public int getSchema_id() {
+        return schema_id;
+    }
+
+    public void setSchema_id(int schema_id) {
+        this.schema_id = schema_id;
     }
 
     public String getFornamn() {
