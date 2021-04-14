@@ -1,20 +1,29 @@
 package com.example.application.Backend.model;
 
 public class Movie {
-
+    private int id;
     private String titel;
     private String sprak;
     private String aldergrans;
     private String genre;
     private int langd;
 
-    public Movie(String titel, String sprak, String aldergrans, String genre, int langd)
+    public Movie(int id, String titel, String sprak, String aldergrans, String genre, int langd)
     {
+        this.id = id;
         this.titel = titel;
         this.sprak = sprak;
         this.aldergrans = aldergrans;
         this.genre = genre;
         this.langd = langd;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTitel() {

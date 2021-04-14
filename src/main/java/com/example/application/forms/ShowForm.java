@@ -16,6 +16,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.data.binder.Binder;
 
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ShowForm extends FormLayout {
@@ -61,7 +62,7 @@ public class ShowForm extends FormLayout {
     }
     public void configureButtonListener()
     {
-        //add.addClickListener(event -> addShow());
+        add.addClickListener(event -> addShow());
         // save.addClickListener(event -> saveShow());
         clear.addClickListener(event -> clearShow());
         cancel.addClickListener(event -> closeForm());
@@ -114,24 +115,26 @@ public class ShowForm extends FormLayout {
     }
     public void clearShow()
     {
-        loungePicker.setEnabled(false);
         show = new ShowObject(null,null,null,null,null);
+        loungePicker.clear();
         binder.setBean(show);
     }
+
     public void deleteShow()
     {
        showService.deleteShow(showView.getSelection().getId());
        showView.populateGrid();
     }
+
     public void addShow()
     {
        // showService.addToShow();
-        showService.addToShow();
-
+        showService.addToShow(moviePicker.getValue().getId(), loungePicker.getValue().getId(), timePicker.getValue().toString(), datePicker.getValue());
         showView.populateGrid();
     }
     private void configureComboBoxes()
     {
+        timePicker.setLocale(Locale.GERMAN);
         moviePicker.setItemLabelGenerator(Movie::getTitel);
         moviePicker.setItems(movieService.findAll());
 
@@ -149,12 +152,11 @@ public class ShowForm extends FormLayout {
             }
         });
 
-        loungePicker.setEnabled(false);
     }
 
     private void configureLoungePicker()
     {
-        loungePicker.setEnabled(true);
+
         loungePicker.setItemLabelGenerator(Lounge::toString);
         loungePicker.setItems(showService.findLoungeForCinema(cinemaPicker.getValue().getId()));
     }

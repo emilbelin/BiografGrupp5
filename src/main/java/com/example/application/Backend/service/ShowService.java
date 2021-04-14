@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +25,10 @@ public class ShowService {
         jdbcTemplate.update(sql, id);
     }
 
-    public void addToShow()
+    public void addToShow(int movieId, int loungeId, String time, LocalDate date)
     {
+        String sql = "CALL ny_forestallning (?,?,?,?)";
+        jdbcTemplate.update(sql, movieId, loungeId, time, date);
 
     }
 

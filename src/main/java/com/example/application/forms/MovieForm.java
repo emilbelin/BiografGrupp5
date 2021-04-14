@@ -33,7 +33,7 @@ public class MovieForm extends FormLayout {
     Button save = new Button("Spara");
     Button clear = new Button("Rensa Formulär");
     Button cancel = new Button("Avbryt");
-    Movie movie = new Movie("", "", "", "", 0);
+    Movie movie = new Movie(0,"", "", "", "", 0);
 
     //Layouts
     HorizontalLayout buttonLayout = new HorizontalLayout();
@@ -75,7 +75,7 @@ public class MovieForm extends FormLayout {
     }
     private void clearMovie()
     {
-        movie =  new Movie("","","","",0);
+        movie =  new Movie(0,"","","","",0);
         binder.setBean(movie);
     }
 
