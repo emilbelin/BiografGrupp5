@@ -1,6 +1,7 @@
 package com.example.application.views.Staff;
 
 import com.example.application.Backend.model.ShowViewModel;
+import com.example.application.Backend.service.MovieService;
 import com.example.application.Backend.service.ShowService;
 import com.example.application.forms.ShowForm;
 import com.example.application.forms.formState;
@@ -9,6 +10,7 @@ import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.Route;
 
 @Route(value = "shows", layout = StaffLayout.class)
@@ -17,19 +19,26 @@ import com.vaadin.flow.router.Route;
 public class ShowsView extends VerticalLayout {
 
     protected Grid<ShowViewModel> grid = new Grid<>(ShowViewModel.class);
+    protected SingleSelect<Grid<ShowViewModel>, ShowViewModel> select = grid.asSingleSelect();
     protected ShowService showService;
     protected ShowForm form;
+    protected MovieService movieService;
 
     protected Button add = new Button("Lägg till");
     protected Button delete = new Button("Ta bort");
-    public ShowsView(ShowService showService)
+    public ShowsView(ShowService showService, MovieService movieService)
     {
         this.showService = showService;
-        this.form = new ShowForm(showService);
+        this.movieService = movieService;
+        this.form = new ShowForm(showService, movieService);
+        form.setVisible(false);
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.add(add,delete);
+        configureButtons();
+
         grid.setColumns("film", "biograf", "salong", "platser_kvar", "tid", "datum");
         populateGrid();
+
         add(buttonLayout, grid, form);
     }
 
@@ -51,5 +60,9 @@ public class ShowsView extends VerticalLayout {
     {
         form.setVisible(bool);
         form.configureForm(state, form);
+    }
+    public ShowViewModel getSelection()
+    {
+        return select.getValue();
     }
 }

@@ -16,7 +16,11 @@ public class ShowService {
     private JdbcTemplate jdbcTemplate;
 
 
-
+    public void deleteShow(int id)
+    {
+        String sql = "DELETE FROM forestallning WHERE id = ?";
+        jdbcTemplate.update(sql, id);
+    }
     public List findCinemas()
     {
         String sql = "SELECT * FROM biograf";
