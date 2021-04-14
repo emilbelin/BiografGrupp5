@@ -21,7 +21,7 @@ public class MovieService  {
     public void addMovie(Movie movie)
     {
         String sql = "INSERT INTO film(titel, sprak, langd, aldersgrans, genre) VALUES(?,?,?,?,?)";
-        jdbcTemplate.update(sql, new Object[] { movie.getTitel(), movie.getSprak(), movie.getLangd(), movie.getAldergrans(), movie.getGenre()});
+        jdbcTemplate.update(sql, movie.getTitel(), movie.getSprak(), movie.getLangd(), movie.getAldergrans(), movie.getGenre());
     }
     public void saveMovie(Movie movie)
     {

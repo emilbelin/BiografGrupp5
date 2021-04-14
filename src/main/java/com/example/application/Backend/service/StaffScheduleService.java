@@ -1,7 +1,7 @@
 package com.example.application.Backend.service;
 
+import com.example.application.Backend.model.ScheduleViewModel;
 import com.example.application.Backend.model.Skift;
-import com.example.application.Backend.model.StaffSchedule;
 import com.example.application.Backend.model.Station;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -59,7 +59,7 @@ public class StaffScheduleService {
 
         try
         {
-            return jdbcTemplate.query(sql, (rs, rowNum) -> new StaffSchedule(rs.getString("fornamn"), rs.getString("efternamn"), rs.getString("namn"),
+            return jdbcTemplate.query(sql, (rs, rowNum) -> new ScheduleViewModel(rs.getString("fornamn"), rs.getString("efternamn"), rs.getString("namn"),
                     rs.getString("datum"), rs.getString("skiftstart"), rs.getString("skiftslut"), rs.getInt("schema_id")));
         }
         catch(Exception e)

@@ -28,7 +28,7 @@ public class ScheduleForm extends FormLayout {
     protected StaffScheduleService staffScheduleService;
     protected ScheduleView scheduleView;
 
-    protected  Binder<ScheduleObject> binder = new Binder<>(ScheduleObject.class);
+    protected Binder<ScheduleObject> binder = new Binder<>(ScheduleObject.class);
 
     protected Button add = new Button("Lägg till");
     protected Button save = new Button("Spara");
