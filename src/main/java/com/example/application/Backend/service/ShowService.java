@@ -27,6 +27,12 @@ public class ShowService {
 
     }
 
+    public List findLoungeForCinema(int bio_id)
+    {
+        String sql = "SELECT * FROM salong WHERE Biograf_id = '" + bio_id + "' ";
+        return jdbcTemplate.query(sql, (rs, rowNum) -> new Lounge(rs.getInt("id"),rs.getInt("salongNr"), rs.getInt("platser"), rs.getInt("Biograf_id")));
+    }
+
     public List findCinemas()
     {
         String sql = "SELECT * FROM biograf";
@@ -47,7 +53,7 @@ public class ShowService {
 
         try
         {
-            return jdbcTemplate.query(sql, (rs, rowNum) -> new Lounge(rs.getInt("id"), rs.getInt("platser"), rs.getInt("Biograf_id")));
+            return jdbcTemplate.query(sql, (rs, rowNum) -> new Lounge(rs.getInt("id"),rs.getInt("salongNr"), rs.getInt("platser"), rs.getInt("Biograf_id")));
         }
         catch(Exception e)
         {

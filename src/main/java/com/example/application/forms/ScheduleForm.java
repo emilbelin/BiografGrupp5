@@ -60,6 +60,7 @@ public class ScheduleForm extends FormLayout {
         binder.forField(staffPicker).bind(ScheduleObject::getStaff, ScheduleObject::setStaff);
         binder.forField(datePicker).bind(ScheduleObject::getDate, ScheduleObject::setDate);
         binder.forField(skiftPicker).bind(ScheduleObject::getSkift, ScheduleObject::setSkift);
+        binder.forField(stationPicker).bind(ScheduleObject::getStation, ScheduleObject::setStation);
         binder.setBean(schedule);
     }
     public void configureForm(formState state, ScheduleForm form)

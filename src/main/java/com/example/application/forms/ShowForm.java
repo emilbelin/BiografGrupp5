@@ -16,7 +16,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.timepicker.TimePicker;
 import com.vaadin.flow.data.binder.Binder;
 
-import java.time.LocalDate;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ShowForm extends FormLayout {
 
@@ -114,6 +114,7 @@ public class ShowForm extends FormLayout {
     }
     public void clearShow()
     {
+        loungePicker.setEnabled(false);
         show = new ShowObject(null,null,null,null,null);
         binder.setBean(show);
     }
@@ -127,8 +128,6 @@ public class ShowForm extends FormLayout {
        // showService.addToShow();
         showService.addToShow();
 
-
-
         showView.populateGrid();
     }
     private void configureComboBoxes()
@@ -138,9 +137,26 @@ public class ShowForm extends FormLayout {
 
         cinemaPicker.setItemLabelGenerator(Cinema::getNamn);
         cinemaPicker.setItems(showService.findCinemas());
+        cinemaPicker.addValueChangeListener(event ->
+        {
+            if (event.getValue() == null)
+            {
+                System.out.println("Error");
+            }
+            else
+            {
+                configureLoungePicker();
+            }
+        });
 
+        loungePicker.setEnabled(false);
+    }
+
+    private void configureLoungePicker()
+    {
+        loungePicker.setEnabled(true);
         loungePicker.setItemLabelGenerator(Lounge::toString);
-        loungePicker.setItems(showService.findLounges());
+        loungePicker.setItems(showService.findLoungeForCinema(cinemaPicker.getValue().getId()));
     }
 
 }

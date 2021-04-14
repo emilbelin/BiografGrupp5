@@ -1,11 +1,12 @@
 package com.example.application.Backend.model;
 
 public class Lounge {
-    private int id, platser, Biograf_id;
+    private int id, salongsNr, platser, Biograf_id;
 
-    public Lounge(int id, int platser, int Biograf_id)
+    public Lounge(int id, int salongsNr, int platser, int Biograf_id)
     {
         this.id = id;
+        this.salongsNr = salongsNr;
         this.platser = platser;
         this.Biograf_id = Biograf_id;
     }
@@ -17,7 +18,15 @@ public class Lounge {
     @Override
     public String toString()
     {
-        return String.valueOf(id);
+        return String.valueOf(salongsNr);
+    }
+
+    public int getSalongsNr() {
+        return salongsNr;
+    }
+
+    public void setSalongsNr(int salongsNr) {
+        this.salongsNr = salongsNr;
     }
 
     public void setId(int id) {
