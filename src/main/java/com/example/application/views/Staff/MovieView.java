@@ -6,23 +6,20 @@ import com.example.application.forms.formState;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
+
+
 import com.vaadin.flow.component.login.LoginForm;
-import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
-import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.router.Route;
 
-
+import com.vaadin.flow.router.*;
 
 
 @Route(value = "movie", layout = StaffLayout.class)
 @PageTitle("Lägg till/ta bort filmer")
 
-public class MovieView extends VerticalLayout {
+public class MovieView extends VerticalLayout implements BeforeEnterListener {
 
 
 
@@ -108,7 +105,11 @@ public class MovieView extends VerticalLayout {
             formVisibility(true, formState.editing);
         }
     }
-
-
+    @Override
+    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
+        if (beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("USER")) {
+            setEnabled(true);
+        }
+    }
 
 }

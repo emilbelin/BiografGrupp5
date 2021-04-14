@@ -3,6 +3,7 @@ package com.example.application.security;
 
 import com.example.application.views.Login.HomePageView;
 import com.example.application.views.Staff.MovieView;
+import com.example.application.views.Staff.ScheduleView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
@@ -26,7 +27,7 @@ public class ConfigureUIServiceInitListener implements VaadinServiceInitListener
     private void authenticateNavigation(BeforeEnterEvent event) {
         if (HomePageView.class.equals(event.getNavigationTarget())
             && SecurityUtils.isUserLoggedIn()) {
-            event.rerouteTo(MovieView.class);
+            event.rerouteTo("movie");
         }
     }
 }

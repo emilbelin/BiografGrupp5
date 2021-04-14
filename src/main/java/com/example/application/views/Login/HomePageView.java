@@ -1,7 +1,8 @@
 package com.example.application.views.Login;
-
+import java.awt.Image;
 import com.example.application.views.Customer.BookingView;
 import com.example.application.views.Staff.MovieView;
+import com.example.application.views.Staff.ScheduleView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.html.H1;
@@ -30,7 +31,6 @@ public class HomePageView extends VerticalLayout {
 
     Button button = new Button("Personal");
     Button button1 = new Button("Kund");
-  /*  Image image = new Image("images/javabio.png", "My App Logo"); */
 
     public HomePageView(){
 
@@ -38,13 +38,12 @@ public class HomePageView extends VerticalLayout {
         VerticalLayout vlay = new VerticalLayout();
 
         viewTitle = new H1("Javagruppens Biograf");
+
         add(viewTitle);
-       /* add(image); */
 
         layout.setId("logo");
         layout.setAlignItems(Alignment.CENTER);
         layout.setVerticalComponentAlignment(Alignment.CENTER, viewTitle);
-      /*  layout.setVerticalComponentAlignment(Alignment.CENTER, image); */
 
 
         button.addClickListener( e -> newOverlay());
@@ -71,16 +70,16 @@ public class HomePageView extends VerticalLayout {
             LoginOverlay overlay = new LoginOverlay();
             LoginI18n i18n = LoginI18n.createDefault();
             LoginI18n.Header header = new LoginI18n.Header();
-            header.setTitle("Employee Login");
+            header.setTitle("Vänligen logga in");
             i18n.setHeader(header);
             overlay.setI18n(i18n);
             overlay.setAction("login");
             overlay.setOpened(true);
-            overlay.addLoginListener(e -> {
-                UI.getCurrent().navigate(MovieView.class);
-            });
+            overlay.addLoginListener(e -> UI.getCurrent().navigate(MovieView.class));
 
-            }
+        }
+
+
 }
 
 

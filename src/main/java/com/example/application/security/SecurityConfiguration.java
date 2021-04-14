@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true)
 @Configuration
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -28,7 +27,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .requestCache().requestCache(new CustomRequestCache())
                 .and().authorizeRequests()
                 .requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
+
                 .anyRequest().authenticated()
+
                 .and().formLogin()
                 .loginPage(LOGIN_URL).permitAll()
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)
@@ -40,7 +41,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("Tim").password("{noop}Kenedi").roles("USER").build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails user1 = User.withUsername("Emil").password("{noop}Belin").roles("USER").build();
+        return new InMemoryUserDetailsManager(user,user1);
     }
 
     @Override
@@ -50,7 +52,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 "/css/**",
                 "/js/**",
                 "/",
-                "/film/**",
                 "/favicon.ico",
                 "/robots.txt",
                 "/sw.js",

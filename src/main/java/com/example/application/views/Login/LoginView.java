@@ -1,14 +1,11 @@
 package com.example.application.views.Login;
 
-import com.example.application.views.Customer.BookingView;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.login.LoginForm;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.router.BeforeEnterEvent;
-import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
@@ -16,7 +13,7 @@ import static com.vaadin.flow.component.UI.getCurrent;
 
 @Route("login")
 @PageTitle("Personal - Javabiografen")
-public class LoginView extends VerticalLayout implements BeforeEnterObserver {
+public class LoginView extends VerticalLayout {
 
     private LoginForm loginForm = new LoginForm();
     HorizontalLayout layout = new HorizontalLayout();
@@ -36,11 +33,6 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
         layout.setJustifyContentMode(JustifyContentMode.CENTER);
     }
 
-    @Override
-    public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
-        if (beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("error")) {
-            loginForm.setEnabled(true);
-        }
 
-    }
+
 }
