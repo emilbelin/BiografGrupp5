@@ -124,7 +124,7 @@ public class ScheduleForm extends FormLayout {
     private void addSchedule()
     {
 
-        //storedProcedure med parameter
+
         staffScheduleService.addToScheme(
                 datePicker.getValue(),
                 staffPicker.getValue().getId(),

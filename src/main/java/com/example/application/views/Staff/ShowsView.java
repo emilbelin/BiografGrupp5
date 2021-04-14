@@ -30,13 +30,14 @@ public class ShowsView extends VerticalLayout {
     {
         this.showService = showService;
         this.movieService = movieService;
-        this.form = new ShowForm(showService, movieService);
+        this.form = new ShowForm(showService, movieService, this);
         form.setVisible(false);
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.add(add,delete);
         configureButtons();
 
-        grid.setColumns("film", "biograf", "salong", "platser_kvar", "tid", "datum");
+        grid.setColumns("film", "biograf", "salong", "platser_kvar", "tid", "datum", "id");
+        grid.removeColumn(grid.getColumnByKey("id"));
         populateGrid();
 
         add(buttonLayout, grid, form);
@@ -49,13 +50,16 @@ public class ShowsView extends VerticalLayout {
     {
         grid.setItems(showService.findForestallningView());
     }
+
     public void configureButtons()
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
 
         add.addClickListener(event -> formVisibility(true, formState.adding));
+        delete.addClickListener(event -> form.deleteShow());
     }
+
     public void formVisibility(Boolean bool, formState state)
     {
         form.setVisible(bool);

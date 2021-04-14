@@ -49,7 +49,7 @@ public class ScheduleView extends VerticalLayout {
         grid.getColumnByKey("datum").setHeader("Datum");
         grid.getColumnByKey("skiftstart").setHeader("Skift Start");
         grid.getColumnByKey("skiftslut").setHeader("Skift Slut");
-        grid.getColumnByKey("schema_id").setHeader("ID");
+        grid.removeColumn(grid.getColumnByKey("schema_id"));
 
 
         add(buttonLayout,grid,form);

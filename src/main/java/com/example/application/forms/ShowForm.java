@@ -39,8 +39,9 @@ public class ShowForm extends FormLayout {
     protected ShowService showService;
     protected MovieService movieService;
     protected ShowsView showView;
-    public ShowForm(ShowService showService, MovieService movieService)
+    public ShowForm(ShowService showService, MovieService movieService, ShowsView showView)
     {
+        this.showView = showView;
         this.showService = showService;
         this.movieService = movieService;
         configureBinder();
@@ -118,11 +119,17 @@ public class ShowForm extends FormLayout {
     }
     public void deleteShow()
     {
-       // showService.deleteShow(showView.getSelection().getId);
+       showService.deleteShow(showView.getSelection().getId());
+       showView.populateGrid();
     }
     public void addShow()
     {
        // showService.addToShow();
+        showService.addToShow();
+
+
+
+        showView.populateGrid();
     }
     private void configureComboBoxes()
     {

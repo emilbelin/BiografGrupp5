@@ -18,9 +18,15 @@ public class ShowService {
 
     public void deleteShow(int id)
     {
-        String sql = "DELETE FROM forestallning WHERE id = ?";
+        String sql = "DELETE FROM forestallningar WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
+
+    public void addToShow()
+    {
+
+    }
+
     public List findCinemas()
     {
         String sql = "SELECT * FROM biograf";
@@ -54,7 +60,7 @@ public class ShowService {
         String sql = "SELECT * FROM forestallning_view";
         try
         {
-            return jdbcTemplate.query(sql, (rs, rowNum) -> new ShowViewModel(rs.getString("Film"), rs.getString("Biograf"), rs.getInt("Salong"), rs.getInt("Platser_kvar"), rs.getString("Tid"), rs.getString("Datum")));
+            return jdbcTemplate.query(sql, (rs, rowNum) -> new ShowViewModel(rs.getString("Film"), rs.getString("Biograf"), rs.getInt("Salong"), rs.getInt("Platser_kvar"), rs.getString("Tid"), rs.getString("Datum"), rs.getInt("id")));
         }
         catch(Exception e)
         {

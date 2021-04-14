@@ -2,15 +2,24 @@ package com.example.application.Backend.model;
 
 public class ShowViewModel {
     private String Film, Biograf, Tid, Datum;
-    private int Salong, Platser_kvar;
+    private int Salong, Platser_kvar, id;
 
-    public ShowViewModel(String film, String biograf, int salong, int platser_kvar, String tid, String datum) {
-        Film = film;
-        Biograf = biograf;
-        Tid = tid;
-        Datum = datum;
-        Salong = salong;
-        Platser_kvar = platser_kvar;
+    public ShowViewModel(String film, String biograf, int salong, int platser_kvar, String tid, String datum, int id) {
+        this.Film = film;
+        this.Biograf = biograf;
+        this.Tid = tid;
+        this.Datum = datum;
+        this.Salong = salong;
+        this.Platser_kvar = platser_kvar;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFilm() {
