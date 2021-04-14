@@ -6,16 +6,25 @@ import com.example.application.forms.formState;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.login.LoginForm;
+import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 
-@Route(value = "", layout = StaffLayout.class)
+
+
+@Route(value = "movie", layout = StaffLayout.class)
 @PageTitle("Lägg till/ta bort filmer")
+
 public class MovieView extends VerticalLayout {
+
+
 
     protected MovieService movieService;
     protected MovieForm form;
@@ -25,11 +34,11 @@ public class MovieView extends VerticalLayout {
 
     protected Button delete = new Button("Ta bort");
     protected Button add = new Button("Lägg till");
-    public MovieView(MovieService movieService)
-    {
+
+    public MovieView(MovieService movieService) {
 
         this.movieService = movieService;
-        form = new MovieForm(movieService,  this);
+        form = new MovieForm(movieService, this);
         form.setVisible(false);
 
         configureButtons();
@@ -39,7 +48,7 @@ public class MovieView extends VerticalLayout {
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
 
-        buttonLayout.add(add,delete);
+        buttonLayout.add(add, delete);
 
         grid.setColumns("titel", "sprak", "aldergrans", "genre", "langd");
         grid.getColumnByKey("titel").setHeader("Titel");
@@ -48,16 +57,16 @@ public class MovieView extends VerticalLayout {
         grid.getColumnByKey("genre").setHeader("Genre");
         grid.getColumnByKey("langd").setHeader("Längd(Minuter)");
         grid.asSingleSelect().addValueChangeListener(event -> selectionHandler());
-        add(buttonLayout,grid, form);
+        add(buttonLayout, grid, form);
         updateList();
 
     }
 
+
     /**
      * @return the Movie object that is currently selected in the grid
      */
-    public Movie getSelection()
-    {
+    public Movie getSelection() {
         return selection.getValue();
     }
 
@@ -66,46 +75,40 @@ public class MovieView extends VerticalLayout {
      * Fills the grid with data from the mySQL database.
      * MovieService.findAll() runs a query and returns a list of objects from the DB.
      */
-    public void updateList()
-    {
+    public void updateList() {
         grid.setItems(movieService.findAll());
     }
 
-    public void configureButtons()
-    {
+    public void configureButtons() {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         add.addClickListener(event -> formVisibility(true, formState.adding));
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         delete.addClickListener(event -> form.deleteAndUpdate());
     }
 
-    public void formVisibility(Boolean bool, formState state)
-    {
-            form.setVisible(bool);
-            form.configureForm(state, form);
+    public void formVisibility(Boolean bool, formState state) {
+        form.setVisible(bool);
+        form.configureForm(state, form);
     }
 
-    public void editFormObject()
-    {
-        if(selection.getValue() == null)
-        {
+    public void editFormObject() {
+        if (selection.getValue() == null) {
             form.setVisible(false);
-        }
-        else {
+        } else {
             formVisibility(true, formState.editing);
             form.editMovie();
         }
 
     }
 
-    public void selectionHandler()
-    {
-        if(selection.isEmpty()) {
+    public void selectionHandler() {
+        if (selection.isEmpty()) {
             formVisibility(false, formState.none);
-        }
-        else
-        {
+        } else {
             formVisibility(true, formState.editing);
         }
     }
+
+
+
 }

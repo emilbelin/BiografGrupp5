@@ -1,5 +1,7 @@
 package com.example.application.views.Login;
 
+import com.example.application.views.Customer.BookingView;
+import com.example.application.views.Staff.MovieView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.html.H1;
@@ -10,6 +12,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.VaadinSessionScope;
+import com.vaadin.flow.component.button.Button;
 import org.springframework.stereotype.Component;
 
 import java.awt.*;
@@ -45,7 +48,7 @@ public class HomePageView extends VerticalLayout {
 
 
         button.addClickListener( e -> newOverlay());
-        button1.addClickListener( e -> getCurrent().navigate(.class));
+        button1.addClickListener( e -> getCurrent().navigate(BookingView.class));
         layout.setVerticalComponentAlignment(Alignment.CENTER, button);
         layout.setVerticalComponentAlignment(Alignment.CENTER, button1);
         vlay.setHorizontalComponentAlignment(Alignment.CENTER,button);
@@ -59,7 +62,6 @@ public class HomePageView extends VerticalLayout {
 
         add(button);
         add(button1);
-
 
         }
 
@@ -75,8 +77,7 @@ public class HomePageView extends VerticalLayout {
             overlay.setAction("login");
             overlay.setOpened(true);
             overlay.addLoginListener(e -> {
-                overlay.close();
-                UI.getCurrent().navigate(PersonalView.class);
+                UI.getCurrent().navigate(MovieView.class);
             });
 
             }
