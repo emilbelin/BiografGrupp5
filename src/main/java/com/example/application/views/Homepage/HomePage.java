@@ -1,4 +1,4 @@
-package com.example.application.views.Login;
+package com.example.application.views.Homepage;
 
 
 import com.vaadin.flow.component.Component;
@@ -13,8 +13,6 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.component.tabs.TabsVariant;
 import com.vaadin.flow.router.PageTitle;
-
-import javax.persistence.Entity;
 
 @PageTitle("Välj ett alternativ")
 @CssImport("./views/helloworld/hello-world-view.css")

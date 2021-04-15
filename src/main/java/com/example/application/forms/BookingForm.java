@@ -70,17 +70,12 @@ public class BookingForm extends FormLayout {
         int returnValue = 0;
         for(Customer customer: customers)
         {
-            boolean foundMatchingNumber = false;
-            boolean foundMatchingName = false;
-
 
             if (phone.getValue().equals(customer.getTelefonnummer())) {
-                foundMatchingNumber = true;
                 returnValue += 1;
             }
             if(first_Name.getValue().equals(customer.getFornamn()) && last_Name.getValue().equals(customer.getEfternamn()))
             {
-                foundMatchingName = true;
                 returnValue += 1;
             }
 
@@ -207,7 +202,7 @@ public class BookingForm extends FormLayout {
     }
     public void ConfigureButtonHandler()
     {
-        confirm.addClickListener(event -> FrankensteinsMonster());
+        confirm.addClickListener(event -> CheckForNameAndPhone());
         cancel.addClickListener(event -> toggleForm(false));
     }
 
@@ -223,22 +218,20 @@ public class BookingForm extends FormLayout {
 
     public void ConfigureChairPicker()
     {
-        chairPicker.setItemLabelGenerator(Chair::convertNummer);
-        chairPicker.setItems(bookingService.findChair(rowPicker.getValue().getId()));
-        chairPicker.setEnabled(true);
+        if(rowPicker.getValue()!=null) {
+            chairPicker.setItemLabelGenerator(Chair::convertNummer);
+            chairPicker.setItems(bookingService.findChair(rowPicker.getValue().getId()));
+            chairPicker.setEnabled(true);
+        }
     }
 
     public void ConfigureRowPicker(boolean bool)
     {
-        if(bool) {
+        if(bool && !rowPicker.isEnabled()){
             rowPicker.setEnabled(true);
             rowPicker.setItemLabelGenerator(Row::convertNummer);
             rowPicker.setItems(bookingService.findRow(bookingView.getSelection().getSalong()));
             rowPicker.addValueChangeListener(event -> ConfigureChairPicker());
-        }
-        else
-        {
-            rowPicker.setEnabled(false);
         }
     }
 }

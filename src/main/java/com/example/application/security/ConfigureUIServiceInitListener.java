@@ -1,9 +1,7 @@
 package com.example.application.security;
 
 
-import com.example.application.views.Login.HomePageView;
-import com.example.application.views.Staff.MovieView;
-import com.example.application.views.Staff.ScheduleView;
+import com.example.application.views.Homepage.HomePageView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.router.BeforeEnterEvent;
 import com.vaadin.flow.server.ServiceInitEvent;
