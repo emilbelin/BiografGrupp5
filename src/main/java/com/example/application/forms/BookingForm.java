@@ -41,7 +41,8 @@ public class BookingForm extends FormLayout {
         this.bookingService = bookingService;
 
         ConfigureBinder();
-        ConfigureButtons();
+        ConfigureButtonTheme();
+        ConfigureButtonHandler();
         ConfigureComboBoxes();
 
         buttonLayout.add(confirm, cancel);
@@ -58,6 +59,7 @@ public class BookingForm extends FormLayout {
         binderCustomer.setBean(customer);
         binder.setBean(bookingObject);
     }
+
     private void fillForm()
     {
         customer = new Customer(first_Name.getValue(), last_Name.getValue(), phone.getValue());
@@ -65,6 +67,7 @@ public class BookingForm extends FormLayout {
         binderCustomer.setBean(customer);
         binder.setBean(bookingObject);
     }
+
     public void toggleForm(boolean bool)
     {
         if(bool)
@@ -82,6 +85,7 @@ public class BookingForm extends FormLayout {
             this.setVisible(false);
         }
     }
+
     public void ConfigureBinder()
     {
         binderCustomer.forField(first_Name).bind(Customer::getFornamn, Customer::setFornamn);
@@ -96,12 +100,14 @@ public class BookingForm extends FormLayout {
         binder.setBean(bookingObject);
     }
 
-    public void ConfigureButtons()
+    public void ConfigureButtonTheme()
     {
         confirm.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         cancel.addThemeVariants(ButtonVariant.LUMO_ERROR);
-
-
+    }
+    public void ConfigureButtonHandler()
+    {
+        cancel.addClickListener(event -> toggleForm(false));
     }
 
     public void ConfigureComboBoxes()
