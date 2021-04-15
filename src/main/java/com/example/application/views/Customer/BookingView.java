@@ -13,6 +13,8 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.Route;
 
+import javax.management.Notification;
+
 @Route(value = "Bokning", layout = CustomerLayout.class)
 public class BookingView extends VerticalLayout {
     protected ShowService showService;
@@ -49,9 +51,16 @@ public class BookingView extends VerticalLayout {
     }
     public void selectHandler()
     {
-        boolean bool;
-        bool = select.getValue() != null;
-        form.toggleForm(bool);
-        form.ConfigureRowPicker(bool);
+        if(select.getValue().getPlatser_kvar() < 1)
+        {
+            form.addNotification("Inga platser kvar!");
+            form.setVisible(false);
+        }
+        else {
+            boolean bool;
+            bool = select.getValue() != null;
+            form.toggleForm(bool);
+            form.ConfigureRowPicker(bool);
+        }
     }
 }

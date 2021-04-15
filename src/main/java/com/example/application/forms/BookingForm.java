@@ -91,8 +91,9 @@ public class BookingForm extends FormLayout {
     {
         int tempInt = bookingService.findWithPhoneNumber(phone.getValue());
         bookingService.addBooking(tempInt, paymentPicker.getValue().getId(), bookingView.getSelection().getId(), chairPicker.getValue().getId());
-        addNotification("Biljett bokad för existerande kund");
+        addNotification("Biljett bokad " + "på telefonnummer " + phone.getValue());
         toggleForm(true);
+        bookingView.populateGrid();
     }
 
     public void kundFinnsRedanError()
@@ -107,9 +108,10 @@ public class BookingForm extends FormLayout {
         bookingService.addCustomer(first_Name.getValue(), last_Name.getValue(), phone.getValue());
         int tempInt = bookingService.findWithPhoneNumber(phone.getValue());
         bookingService.addBooking(tempInt, paymentPicker.getValue().getId(), bookingView.getSelection().getId(), chairPicker.getValue().getId());
-        addNotification("Biljett Bokad!");
+        addNotification("Biljett bokad " + "på telefonnummer " + phone.getValue());
         customers = bookingService.findCustomers();
         toggleForm(true);
+        bookingView.populateGrid();
     }
 
     public void addNotification(String message)

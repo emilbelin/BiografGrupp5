@@ -1,5 +1,7 @@
 package com.example.application.views.Staff;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.dependency.CssImport;
@@ -10,6 +12,8 @@ import com.vaadin.flow.router.HighlightCondition;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.Router;
 import com.vaadin.flow.router.RouterLink;
+
+import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 @CssImport("./styles/shared-styles.js")
 public class StaffLayout extends AppLayout {
@@ -23,14 +27,15 @@ public class StaffLayout extends AppLayout {
     {
         H1 logo = new H1("Personal Sida");
         logo.addClassName("logo");
-
+        Button backButton = new Button("Gå till Startsidan");
+        backButton.addClickListener(event -> UI.getCurrent().navigate(""));
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo);
-
+        HorizontalLayout button = new HorizontalLayout(backButton);
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
-        header.setWidth("100%");
+        header.setWidth("90%");
         header.addClassName("header");
 
-        addToNavbar(header);
+        addToNavbar(header, button);
     }
 
     private void createDrawer()
