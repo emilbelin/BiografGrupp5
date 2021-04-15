@@ -31,7 +31,7 @@ public class StaffLayout extends AppLayout {
         backButton.addClickListener(event -> UI.getCurrent().navigate(""));
         HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), logo);
         HorizontalLayout button = new HorizontalLayout(backButton);
-        header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.CENTER);
+        header.setVerticalComponentAlignment(FlexComponent.Alignment.CENTER, logo);
         header.setWidth("90%");
         header.addClassName("header");
 

@@ -51,10 +51,13 @@ public class BookingView extends VerticalLayout {
     }
     public void selectHandler()
     {
-        if(select.getValue().getPlatser_kvar() < 1)
+        if(select.getValue() != null)
         {
-            form.addNotification("Inga platser kvar!");
-            form.setVisible(false);
+            if(select.getValue().getPlatser_kvar() < 1)
+            {
+                form.addNotification("Inga platser kvar!");
+                form.setVisible(false);
+            }
         }
         else {
             boolean bool;
