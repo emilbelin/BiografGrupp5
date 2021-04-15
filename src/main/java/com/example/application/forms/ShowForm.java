@@ -53,6 +53,10 @@ public class ShowForm extends FormLayout {
         add(moviePicker, cinemaPicker, loungePicker, timePicker, datePicker, buttonLayout);
 
     }
+
+    /**
+     * Sets up the visuals of the buttons.
+     */
     private void configureButtons()
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -67,10 +71,12 @@ public class ShowForm extends FormLayout {
         clear.addClickListener(event -> clearShow());
         cancel.addClickListener(event -> closeForm());
     }
+
     private void closeForm()
     {
         this.setVisible(false);
     }
+
     public void configureForm(formState state, ShowForm form)
     {
         form.remove(moviePicker, cinemaPicker, loungePicker, timePicker, datePicker, buttonLayout);
@@ -116,8 +122,8 @@ public class ShowForm extends FormLayout {
     public void clearShow()
     {
         show = new ShowObject(null,null,null,null,null);
-        loungePicker.clear();
         binder.setBean(show);
+        loungePicker.setEnabled(false);
     }
 
     public void deleteShow()
@@ -151,12 +157,13 @@ public class ShowForm extends FormLayout {
                 configureLoungePicker();
             }
         });
+        loungePicker.setEnabled(false);
 
     }
 
     private void configureLoungePicker()
     {
-
+        loungePicker.setEnabled(true);
         loungePicker.setItemLabelGenerator(Lounge::toString);
         loungePicker.setItems(showService.findLoungeForCinema(cinemaPicker.getValue().getId()));
     }

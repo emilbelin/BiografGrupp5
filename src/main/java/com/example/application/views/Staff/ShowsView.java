@@ -38,6 +38,7 @@ public class ShowsView extends VerticalLayout {
 
         grid.setColumns("film", "biograf", "salong", "platser_kvar", "tid", "datum", "id");
         grid.removeColumn(grid.getColumnByKey("id"));
+        grid.getColumnByKey("platser_kvar").setHeader("Platser Kvar");
         populateGrid();
 
         add(buttonLayout, grid, form);
