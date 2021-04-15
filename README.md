@@ -1,9 +1,10 @@
 # Vaadin Biograf-Applikation
 
-##Personal
+##Personal kan
 * Lägga till nya filmer
 * Lägga till föreställningar
 * Ändra i personal-schemat.
 
-##Kunder
-*Boka biljetter till föreställningar.
+##Kunder kan
+* Boka biljetter till föreställningar
+* 
