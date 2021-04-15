@@ -12,7 +12,7 @@ import com.vaadin.flow.router.Route;
 @PageTitle("Personal - Javabiografen")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
-    private LoginForm loginForm = new LoginForm();
+    LoginForm loginForm = new LoginForm();
 
     public LoginView() {
         addClassName("login-view");
