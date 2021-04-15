@@ -41,13 +41,14 @@ public class MovieView extends VerticalLayout {
 
         buttonLayout.add(add,delete);
 
-        grid.setColumns("titel", "sprak", "aldergrans", "genre", "langd");
+        grid.setColumns("id", "titel", "sprak", "aldergrans", "genre", "langd");
         grid.getColumnByKey("titel").setHeader("Titel");
         grid.getColumnByKey("sprak").setHeader("Språk");
         grid.getColumnByKey("aldergrans").setHeader("Åldersgräns");
         grid.getColumnByKey("genre").setHeader("Genre");
         grid.getColumnByKey("langd").setHeader("Längd(Minuter)");
         grid.asSingleSelect().addValueChangeListener(event -> selectionHandler());
+        grid.removeColumn(grid.getColumnByKey("id"));
         add(buttonLayout,grid, form);
         updateList();
 

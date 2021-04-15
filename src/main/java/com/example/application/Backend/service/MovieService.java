@@ -21,7 +21,7 @@ public class MovieService  {
     public void addMovie(Movie movie)
     {
         String sql = "INSERT INTO film(titel, sprak, langd, aldersgrans, genre) VALUES(?,?,?,?,?)";
-        jdbcTemplate.update(sql, new Object[] { movie.getTitel(), movie.getSprak(), movie.getLangd(), movie.getAldergrans(), movie.getGenre()});
+        jdbcTemplate.update(sql, movie.getTitel(), movie.getSprak(), movie.getLangd(), movie.getAldergrans(), movie.getGenre());
     }
     public void saveMovie(Movie movie)
     {
@@ -38,7 +38,7 @@ public class MovieService  {
     {
         try
         {
-            return jdbcTemplate.query("SELECT titel, sprak, langd, aldersgrans, genre FROM film", (rs, rowNum) -> new Movie(rs.getString("titel"), rs.getString("sprak"), rs.getString("aldersgrans"), rs.getString("genre"), rs.getInt("langd")));
+            return jdbcTemplate.query("SELECT id, titel, sprak, langd, aldersgrans, genre FROM film", (rs, rowNum) -> new Movie(rs.getInt("id"), rs.getString("titel"), rs.getString("sprak"), rs.getString("aldersgrans"), rs.getString("genre"), rs.getInt("langd")));
         }
         catch(Exception e)
         {

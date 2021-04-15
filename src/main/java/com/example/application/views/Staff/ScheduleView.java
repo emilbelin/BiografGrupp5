@@ -1,8 +1,6 @@
 package com.example.application.views.Staff;
 
-import com.example.application.Backend.model.ScheduleObject;
-import com.example.application.Backend.model.StaffSchedule;
-import com.example.application.Backend.service.ScheduleService;
+import com.example.application.Backend.model.ScheduleViewModel;
 import com.example.application.Backend.service.StaffScheduleService;
 import com.example.application.Backend.service.StaffService;
 import com.example.application.forms.ScheduleForm;
@@ -15,27 +13,23 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.Route;
 
-import java.awt.*;
-
-@Route(value = "Schedule", layout = StaffLayout.class)
+@Route(value = "Schema", layout = StaffLayout.class)
 public class ScheduleView extends VerticalLayout {
 
-    protected Grid<StaffSchedule> grid = new Grid<>(StaffSchedule.class);
-    protected SingleSelect<Grid<StaffSchedule>, StaffSchedule> selection = grid.asSingleSelect();
+    protected Grid<ScheduleViewModel> grid = new Grid<>(ScheduleViewModel.class);
+    protected SingleSelect<Grid<ScheduleViewModel>, ScheduleViewModel> selection = grid.asSingleSelect();
 
 
     protected Button add = new Button("Lägg till");
     protected Button delete = new Button("Ta bort");
 
-    protected ScheduleService scheduleService;
     protected StaffScheduleService staffScheduleService;
     protected ScheduleForm form;
     protected StaffService staffService;
-    public ScheduleView(StaffService staffService, ScheduleService scheduleService, StaffScheduleService staffScheduleService)
+    public ScheduleView(StaffService staffService, StaffScheduleService staffScheduleService)
     {
         this.staffScheduleService = staffScheduleService;
         this.staffService = staffService;
-        this.scheduleService = scheduleService;
         form = new ScheduleForm(staffService,this, staffScheduleService);
         form.setVisible(false);
 
@@ -55,7 +49,7 @@ public class ScheduleView extends VerticalLayout {
         grid.getColumnByKey("datum").setHeader("Datum");
         grid.getColumnByKey("skiftstart").setHeader("Skift Start");
         grid.getColumnByKey("skiftslut").setHeader("Skift Slut");
-        grid.getColumnByKey("schema_id").setHeader("ID");
+        grid.removeColumn(grid.getColumnByKey("schema_id"));
 
 
         add(buttonLayout,grid,form);
@@ -66,7 +60,7 @@ public class ScheduleView extends VerticalLayout {
     {
         grid.setItems(staffScheduleService.findScheduleList());
     }
-    public StaffSchedule getSelection()
+    public ScheduleViewModel getSelection()
     {
         return selection.getValue();
     }
@@ -78,6 +72,7 @@ public class ScheduleView extends VerticalLayout {
         delete.addClickListener(event ->form.deleteAndUpdate());
         add.addClickListener(event -> formVisibility(true, formState.adding));
     }
+
     public void formVisibility(Boolean bool, formState state)
     {
         form.setVisible(bool);
