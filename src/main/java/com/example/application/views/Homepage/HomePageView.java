@@ -1,8 +1,6 @@
-package com.example.application.views.Login;
-import java.awt.Image;
+package com.example.application.views.Homepage;
 import com.example.application.views.Customer.BookingView;
 import com.example.application.views.Staff.MovieView;
-import com.example.application.views.Staff.ScheduleView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.html.H1;
@@ -14,9 +12,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 import com.vaadin.flow.component.button.Button;
-import org.springframework.stereotype.Component;
-
-import java.awt.*;
 
 import static com.vaadin.flow.component.UI.getCurrent;
 

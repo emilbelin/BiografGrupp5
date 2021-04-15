@@ -223,22 +223,20 @@ public class BookingForm extends FormLayout {
 
     public void ConfigureChairPicker()
     {
-        chairPicker.setItemLabelGenerator(Chair::convertNummer);
-        chairPicker.setItems(bookingService.findChair(rowPicker.getValue().getId()));
-        chairPicker.setEnabled(true);
+        if(rowPicker.getValue()!=null) {
+            chairPicker.setItemLabelGenerator(Chair::convertNummer);
+            chairPicker.setItems(bookingService.findChair(rowPicker.getValue().getId()));
+            chairPicker.setEnabled(true);
+        }
     }
 
     public void ConfigureRowPicker(boolean bool)
     {
-        if(bool) {
+        if(bool && !rowPicker.isEnabled()){
             rowPicker.setEnabled(true);
             rowPicker.setItemLabelGenerator(Row::convertNummer);
             rowPicker.setItems(bookingService.findRow(bookingView.getSelection().getSalong()));
             rowPicker.addValueChangeListener(event -> ConfigureChairPicker());
-        }
-        else
-        {
-            rowPicker.setEnabled(false);
         }
     }
 }
