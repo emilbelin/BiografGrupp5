@@ -3,7 +3,6 @@ package com.example.application.Backend.model;
 public class Customer {
 
     private String fornamn, efternamn, telefonnummer;
-
     public Customer(String fornamn, String efternamn, String telefonnummer)
     {
         this.fornamn = fornamn;

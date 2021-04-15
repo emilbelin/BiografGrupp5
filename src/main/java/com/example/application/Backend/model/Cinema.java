@@ -5,7 +5,7 @@ public class Cinema {
     private String namn;
     private String telefon;
     private String adress;
-    public Cinema(int id,String namn, String telefon, String adress)
+    public Cinema(int id, String namn, String telefon, String adress)
     {
         this.id = id;
         this.namn = namn;

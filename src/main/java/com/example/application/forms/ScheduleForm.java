@@ -28,7 +28,7 @@ public class ScheduleForm extends FormLayout {
     protected StaffScheduleService staffScheduleService;
     protected ScheduleView scheduleView;
 
-    protected  Binder<ScheduleObject> binder = new Binder<>(ScheduleObject.class);
+    protected Binder<ScheduleObject> binder = new Binder<>(ScheduleObject.class);
 
     protected Button add = new Button("Lägg till");
     protected Button save = new Button("Spara");
@@ -60,6 +60,7 @@ public class ScheduleForm extends FormLayout {
         binder.forField(staffPicker).bind(ScheduleObject::getStaff, ScheduleObject::setStaff);
         binder.forField(datePicker).bind(ScheduleObject::getDate, ScheduleObject::setDate);
         binder.forField(skiftPicker).bind(ScheduleObject::getSkift, ScheduleObject::setSkift);
+        binder.forField(stationPicker).bind(ScheduleObject::getStation, ScheduleObject::setStation);
         binder.setBean(schedule);
     }
     public void configureForm(formState state, ScheduleForm form)
@@ -124,7 +125,7 @@ public class ScheduleForm extends FormLayout {
     private void addSchedule()
     {
 
-        //storedProcedure med parameter
+
         staffScheduleService.addToScheme(
                 datePicker.getValue(),
                 staffPicker.getValue().getId(),
