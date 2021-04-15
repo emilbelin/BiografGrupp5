@@ -13,7 +13,7 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.selection.SingleSelect;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "ScheduleViewModel", layout = StaffLayout.class)
+@Route(value = "Schema", layout = StaffLayout.class)
 public class ScheduleView extends VerticalLayout {
 
     protected Grid<ScheduleViewModel> grid = new Grid<>(ScheduleViewModel.class);
