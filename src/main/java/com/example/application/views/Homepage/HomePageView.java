@@ -4,6 +4,7 @@ import com.example.application.views.Staff.MovieView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.Unit;
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.Image;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -31,15 +32,15 @@ public class HomePageView extends VerticalLayout {
 
         HorizontalLayout layout = new HorizontalLayout();
         VerticalLayout vlay = new VerticalLayout();
-
+        Image img=new Image("images/javabio.png", "My App logo");
         viewTitle = new H1("Javagruppens Biograf");
 
-        add(viewTitle);
+        add(viewTitle, img);
 
         layout.setId("logo");
         layout.setAlignItems(Alignment.CENTER);
         layout.setVerticalComponentAlignment(Alignment.CENTER, viewTitle);
-
+        layout.setVerticalComponentAlignment(Alignment.CENTER, img);
 
         button.addClickListener( e -> newOverlay());
         button1.addClickListener( e -> getCurrent().navigate(BookingView.class));
