@@ -2,7 +2,6 @@ package com.example.application.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -42,7 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService() {
         UserDetails user = User.withUsername("Tim").password("{noop}Kenedi").roles("USER").build();
         UserDetails user1 = User.withUsername("Emil").password("{noop}Belin").roles("USER").build();
-        return new InMemoryUserDetailsManager(user,user1);
+        UserDetails user2 = User.withUsername("Joel").password("{noop}Reboia").roles("USER").build();
+        UserDetails user3 = User.withUsername("Ahmed").password("{noop}Surchi").roles("USER").build();
+        UserDetails user4 = User.withUsername("Sebastian").password("{noop}Ivanoff").roles("USER").build();
+
+        return new InMemoryUserDetailsManager(user,user1,user2,user3,user4);
     }
 
     @Override

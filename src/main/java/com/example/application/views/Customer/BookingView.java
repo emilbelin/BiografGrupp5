@@ -51,6 +51,11 @@ public class BookingView extends VerticalLayout {
     }
     public void selectHandler()
     {
+        boolean bool;
+        bool = select.getValue() != null;
+        form.toggleForm(bool);
+        form.ConfigureRowPicker(bool);
+        System.out.println(bool);
         if(select.getValue() != null)
         {
             if(select.getValue().getPlatser_kvar() < 1)
@@ -59,11 +64,6 @@ public class BookingView extends VerticalLayout {
                 form.setVisible(false);
             }
         }
-        else {
-            boolean bool;
-            bool = select.getValue() != null;
-            form.toggleForm(bool);
-            form.ConfigureRowPicker(bool);
-        }
+
     }
 }
