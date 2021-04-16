@@ -37,25 +37,24 @@ public class BookingView extends VerticalLayout {
         populateGrid();
         form.setVisible(false);
         add(grid, form);
-
-
     }
 
     public ShowViewModel getSelection()
     {
         return select.getValue();
     }
+
     public void populateGrid()
     {
         grid.setItems(showService.findForestallningView());
     }
+
     public void selectHandler()
     {
         boolean bool;
         bool = select.getValue() != null;
         form.toggleForm(bool);
         form.ConfigureRowPicker(bool);
-        System.out.println(bool);
         if(select.getValue() != null)
         {
             if(select.getValue().getPlatser_kvar() < 1)

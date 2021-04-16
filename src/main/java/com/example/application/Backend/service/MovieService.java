@@ -18,11 +18,13 @@ public class MovieService  {
         String sql = "DELETE FROM film WHERE titel = ?";
         jdbcTemplate.update(sql, titel);
     }
+
     public void addMovie(Movie movie)
     {
         String sql = "INSERT INTO film(titel, sprak, langd, aldersgrans, genre) VALUES(?,?,?,?,?)";
         jdbcTemplate.update(sql, movie.getTitel(), movie.getSprak(), movie.getLangd(), movie.getAldergrans(), movie.getGenre());
     }
+
     public void saveMovie(Movie movie)
     {
         jdbcTemplate.update("UPDATE film SET titel = ?, sprak = ?,langd = ?, aldersgrans = ?, genre = ? WHERE titel = ?",

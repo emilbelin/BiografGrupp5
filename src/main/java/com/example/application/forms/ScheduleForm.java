@@ -117,15 +117,15 @@ public class ScheduleForm extends FormLayout {
         schedule = new ScheduleObject(null, null,null, null);
         binder.setBean(schedule);
     }
+
     public void deleteAndUpdate()
     {
         staffScheduleService.deleteSchedule(scheduleView.getSelection().getSchema_id());
         scheduleView.populateGrid();
     }
+
     private void addSchedule()
     {
-
-
         staffScheduleService.addToScheme(
                 datePicker.getValue(),
                 staffPicker.getValue().getId(),
@@ -134,10 +134,12 @@ public class ScheduleForm extends FormLayout {
 
         scheduleView.populateGrid();
     }
+
     private void closeForm()
     {
         this.setVisible(false);
     }
+
     public void configureButtonListener()
     {
         add.addClickListener(event -> addSchedule());
@@ -145,6 +147,7 @@ public class ScheduleForm extends FormLayout {
         clear.addClickListener(event -> clearSchedule());
         cancel.addClickListener(event -> closeForm());
     }
+
     private void configureComboBoxes()
     {
         staffPicker.setItemLabelGenerator(Staff::getFullName);

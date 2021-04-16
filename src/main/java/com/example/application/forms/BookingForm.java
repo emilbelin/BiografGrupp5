@@ -78,8 +78,8 @@ public class BookingForm extends FormLayout {
             {
                 returnValue += 1;
             }
-
         }
+
         if(returnValue > 2)
         {
             returnValue = 2;
@@ -87,6 +87,25 @@ public class BookingForm extends FormLayout {
         return returnValue;
 
     }
+
+    public void CheckForNameAndPhone()
+    {
+        switch (FrankensteinsMonster())
+        {
+            case(0):
+                nyKundBiljett();
+                break;
+            case(1):
+                kundFinnsRedanError();
+                break;
+            case(2):
+                existerandeKundBiljett();
+                break;
+            default:
+                System.out.println("fel");
+        }
+    }
+
     public void existerandeKundBiljett()
     {
         int tempInt = bookingService.findWithPhoneNumber(phone.getValue());
@@ -185,23 +204,6 @@ public class BookingForm extends FormLayout {
 
     }
 
-    public void CheckForNameAndPhone()
-    {
-        switch (FrankensteinsMonster())
-        {
-            case(0):
-                nyKundBiljett();
-                break;
-            case(1):
-                kundFinnsRedanError();
-                break;
-            case(2):
-                existerandeKundBiljett();
-                break;
-            default:
-                System.out.println("fel");
-        }
-    }
     public void ConfigureButtonHandler()
     {
         confirm.addClickListener(event -> CheckForNameAndPhone());
