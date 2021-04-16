@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
-import java.sql.CallableStatement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class BookingService {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    CallableStatement callableStatement;
+
     public int findWithPhoneNumber(String phonenumber)
     {
         String sql = "SELECT id FROM kund WHERE telefonnummer = ?";
