@@ -217,7 +217,6 @@
             <artifactId>spring-security-config</artifactId>
             <version>5.4.5</version>
         </dependency>
-
     </dependencies>
 
     <build>
