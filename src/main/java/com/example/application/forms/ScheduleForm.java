@@ -43,6 +43,13 @@ public class ScheduleForm extends FormLayout {
     protected ComboBox<Station> stationPicker = new ComboBox<>("Station");
     protected DatePicker datePicker = new DatePicker("Datum");
     protected HorizontalLayout buttonLayout = new HorizontalLayout();
+
+    /**
+     * @param staffService fetches data from DB
+     * @param scheduleView view with schedules
+     * @param staffScheduleService fetches data from DB
+     * Sets the form in the scheduleview so the user can add new schedules
+     */
     public ScheduleForm(StaffService staffService, ScheduleView scheduleView, StaffScheduleService staffScheduleService)
     {
         this.staffScheduleService = staffScheduleService;
@@ -55,6 +62,10 @@ public class ScheduleForm extends FormLayout {
 
         add(staffPicker, skiftPicker, stationPicker, datePicker, buttonLayout);
     }
+
+    /**
+     * Fills the form fields with data from the DB
+     */
     public void configureBinder()
     {
         binder.forField(staffPicker).bind(ScheduleObject::getStaff, ScheduleObject::setStaff);
@@ -63,6 +74,14 @@ public class ScheduleForm extends FormLayout {
         binder.forField(stationPicker).bind(ScheduleObject::getStation, ScheduleObject::setStation);
         binder.setBean(schedule);
     }
+
+    /**
+     * @param state
+     * @param form
+     * Depending on the ENUM state value(adding, editing, none) ->
+     * Configure the form to allow either adding, editing shows
+     * or hide the form if state.none.
+     */
     public void configureForm(formState state, ScheduleForm form)
     {
         form.remove(staffPicker, skiftPicker, stationPicker, datePicker, buttonLayout);
@@ -87,9 +106,8 @@ public class ScheduleForm extends FormLayout {
         {
             form.setVisible(false);
         }
-
-
     }
+
     private HorizontalLayout buttonsAdding()
     {
         return new HorizontalLayout(add, clear, cancel);
@@ -99,6 +117,9 @@ public class ScheduleForm extends FormLayout {
         return new HorizontalLayout(save, clear);
     }
 
+    /**
+     * Configure button visuals
+     */
     private void configureButtons()
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -112,20 +133,21 @@ public class ScheduleForm extends FormLayout {
     {
         return scheduleObjectList;
     }
+
     public void clearSchedule()
     {
         schedule = new ScheduleObject(null, null,null, null);
         binder.setBean(schedule);
     }
+
     public void deleteAndUpdate()
     {
         staffScheduleService.deleteSchedule(scheduleView.getSelection().getSchema_id());
         scheduleView.populateGrid();
     }
+
     private void addSchedule()
     {
-
-
         staffScheduleService.addToScheme(
                 datePicker.getValue(),
                 staffPicker.getValue().getId(),
@@ -134,17 +156,25 @@ public class ScheduleForm extends FormLayout {
 
         scheduleView.populateGrid();
     }
+
     private void closeForm()
     {
         this.setVisible(false);
     }
+
+    /**
+     * Configure button functionality
+     */
     public void configureButtonListener()
     {
         add.addClickListener(event -> addSchedule());
-        // save.addClickListener(event -> saveSchedule());
         clear.addClickListener(event -> clearSchedule());
         cancel.addClickListener(event -> closeForm());
     }
+
+    /**
+     * Fill comboboxes with data from DB and configures what is displayed to the user
+     */
     private void configureComboBoxes()
     {
         staffPicker.setItemLabelGenerator(Staff::getFullName);
@@ -160,8 +190,10 @@ public class ScheduleForm extends FormLayout {
                 //Selected Object
             }
         });
+
         skiftPicker.setItemLabelGenerator(Skift::getValue);
         skiftPicker.setItems(staffScheduleService.findSkift());
+
         stationPicker.setItemLabelGenerator(Station::getNamn);
         stationPicker.setItems(staffScheduleService.findStation());
     }

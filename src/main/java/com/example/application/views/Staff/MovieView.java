@@ -47,16 +47,17 @@ public class MovieView extends VerticalLayout implements BeforeEnterListener {
 
         buttonLayout.add(add, delete);
 
+
         grid.setColumns("id", "titel", "sprak", "aldergrans", "genre", "langd");
         grid.getColumnByKey("titel").setHeader("Titel");
         grid.getColumnByKey("sprak").setHeader("Språk");
         grid.getColumnByKey("aldergrans").setHeader("Åldersgräns");
         grid.getColumnByKey("genre").setHeader("Genre");
         grid.getColumnByKey("langd").setHeader("Längd(Minuter)");
-        grid.asSingleSelect().addValueChangeListener(event -> selectionHandler());
- 
 
+        grid.asSingleSelect().addValueChangeListener(event -> selectionHandler());
         grid.removeColumn(grid.getColumnByKey("id"));
+
         add(buttonLayout,grid, form);
        
         updateList();
@@ -80,6 +81,9 @@ public class MovieView extends VerticalLayout implements BeforeEnterListener {
         grid.setItems(movieService.findAll());
     }
 
+    /**
+     * Adds configurations for both visuals and functionality to buttons
+     */
     public void configureButtons() {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         add.addClickListener(event -> formVisibility(true, formState.adding));
@@ -87,11 +91,21 @@ public class MovieView extends VerticalLayout implements BeforeEnterListener {
         delete.addClickListener(event -> form.deleteAndUpdate());
     }
 
+    /**
+     * @param bool true to set form to visible, false to hide
+     * @param state ENUMS for deciding which buttons the form should have ( Adding, Editing, None )
+     *              Hides/Shows the form and configures the form functionality depending on action
+     */
     public void formVisibility(Boolean bool, formState state) {
         form.setVisible(bool);
         form.configureForm(state, form);
     }
 
+
+    /**
+     * If there is nothing selected, hide the form
+     * If a grid item is selected, show the form with the editing state.
+     */
     public void editFormObject() {
         if (selection.getValue() == null) {
             form.setVisible(false);
@@ -109,6 +123,7 @@ public class MovieView extends VerticalLayout implements BeforeEnterListener {
             formVisibility(true, formState.editing);
         }
     }
+
     @Override
     public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
         if (beforeEnterEvent.getLocation().getQueryParameters().getParameters().containsKey("USER")) {

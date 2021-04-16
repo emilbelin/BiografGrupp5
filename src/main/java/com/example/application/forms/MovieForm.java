@@ -80,6 +80,9 @@ public class MovieForm extends FormLayout {
     }
 
 
+    /**
+     * Configures button visuals
+     */
     private void createButtonLayout()
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -101,6 +104,17 @@ public class MovieForm extends FormLayout {
     {
         this.setVisible(false);
     }
+
+    /**
+     * @param state
+     * @param form
+     * /**
+     *      * @param state
+     *      * @param form
+     *      * Depending on the ENUM state value(adding, editing, none) ->
+     *      * Configure the form to allow either adding, editing shows
+     *      * or hide the form if state.none.
+     *      */
 
     public void configureForm(formState state, MovieForm form)
     {
@@ -140,6 +154,9 @@ public class MovieForm extends FormLayout {
 
     }
 
+    /**
+     * Binds the object variables to the form fields
+     */
     public void configureBinder()
     {
         binder.forField(titel).bind(Movie::getTitel, Movie::setTitel);
@@ -150,6 +167,9 @@ public class MovieForm extends FormLayout {
         binder.setBean(movie);
     }
 
+    /**
+     * Configure button functionality
+     */
     public void configureButtonListener()
     {
         add.addClickListener(event -> addAndUpdate());

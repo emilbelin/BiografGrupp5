@@ -19,12 +19,23 @@ public class ShowService {
     private JdbcTemplate jdbcTemplate;
 
 
+    /**
+     * @param id of the show to remove
+     *           takes parameter to delete a selected show in the ShowView
+     */
     public void deleteShow(int id)
     {
         String sql = "DELETE FROM forestallningar WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
 
+    /**
+     * @param movieId
+     * @param loungeId
+     * @param time
+     * @param date
+     * calls a stored procedure to add a new show to the DB using the parameters, which are taken from the ShowForm fields.
+     */
     public void addToShow(int movieId, int loungeId, String time, LocalDate date)
     {
         String sql = "CALL ny_forestallning (?,?,?,?)";
@@ -32,12 +43,21 @@ public class ShowService {
 
     }
 
+    /**
+     *
+     * @param bio_id the cinema to take lounges from
+     * @return a list of lounges for the selected cinema
+     */
     public List findLoungeForCinema(int bio_id)
     {
         String sql = "SELECT * FROM salong WHERE Biograf_id = '" + bio_id + "' ";
         return jdbcTemplate.query(sql, (rs, rowNum) -> new Lounge(rs.getInt("id"),rs.getInt("salongNr"), rs.getInt("platser"), rs.getInt("Biograf_id")));
     }
 
+    /**
+     *
+     * @return a list of cinema objects with values from DB
+     */
     public List findCinemas()
     {
         String sql = "SELECT * FROM biograf";
@@ -52,6 +72,9 @@ public class ShowService {
         }
     }
 
+    /**
+     * @return a list of lounges with values from the DB
+     */
     public List findLounges()
     {
         String sql = "SELECT * FROM salong";
@@ -66,6 +89,9 @@ public class ShowService {
         }
     }
 
+    /**
+     * @return a list of shows from the DB view "forestallning_view" to fill the ShowView grid with.
+     */
     public List findForestallningView()
     {
         String sql = "SELECT * FROM forestallning_view";

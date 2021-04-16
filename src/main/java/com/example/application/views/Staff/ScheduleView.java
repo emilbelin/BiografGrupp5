@@ -26,6 +26,14 @@ public class ScheduleView extends VerticalLayout {
     protected StaffScheduleService staffScheduleService;
     protected ScheduleForm form;
     protected StaffService staffService;
+
+
+    /**
+     * @param staffService
+     * @param staffScheduleService
+     * The view where staff can add/remove views
+     *
+     */
     public ScheduleView(StaffService staffService, StaffScheduleService staffScheduleService)
     {
         this.staffScheduleService = staffScheduleService;
@@ -56,14 +64,26 @@ public class ScheduleView extends VerticalLayout {
         populateGrid();
     }
 
+    /**
+     * Fills the grid with schedules from the mySQL database
+     */
     public void populateGrid()
     {
         grid.setItems(staffScheduleService.findScheduleList());
     }
+
+    /**
+     * @return selected grid item
+     */
     public ScheduleViewModel getSelection()
     {
         return selection.getValue();
     }
+
+
+    /**
+     * Configures both the visuals and functionality of buttons
+     */
     public void configureButtons()
     {
         add.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -73,6 +93,11 @@ public class ScheduleView extends VerticalLayout {
         add.addClickListener(event -> formVisibility(true, formState.adding));
     }
 
+    /**
+     * @param bool true to set form to visible, false to hide
+     * @param state ENUMS for deciding which buttons the form should have ( Adding, Editing, None )
+     *              Hides/Shows the form and configures the form functionality depending on action
+     */
     public void formVisibility(Boolean bool, formState state)
     {
         form.setVisible(bool);

@@ -14,8 +14,9 @@ public class StaffService {
     JdbcTemplate jdbcTemplate;
 
 
-
-
+    /**
+     * @return a list of staff objects with data taken from the DB
+     */
     public List<Staff> findAll()
     {
         String sql = "SELECT id, fornamn, efternamn, titel FROM personal";

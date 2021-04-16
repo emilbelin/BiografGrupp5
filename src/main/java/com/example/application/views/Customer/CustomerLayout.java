@@ -10,11 +10,17 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 
 public class CustomerLayout extends AppLayout {
 
+    /**
+     * Adds the common visuals of the Customer views
+     */
     public CustomerLayout()
     {
         createHeader();
     }
 
+    /**
+     * Creates a header containing a Logo and a "back" button
+     */
     public void createHeader()
     {
         H1 logo = new H1("Bokning");

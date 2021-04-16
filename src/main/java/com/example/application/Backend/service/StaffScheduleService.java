@@ -16,6 +16,9 @@ public class StaffScheduleService {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
+    /**
+     * returns a list of station objects with values from the DB
+     */
     public List findStation()
     {
         String sql = "SELECT * FROM station";
@@ -29,17 +32,35 @@ public class StaffScheduleService {
         }
     }
 
+    /**
+     *
+     * @param id the schedule id
+     *           deletes a schedule from the database.
+     *           called when the "delete" button is pressed in ScheduleView
+     */
     public void deleteSchedule(int id)
     {
         String sql = "DELETE FROM skift_has_personal WHERE id = ?";
         jdbcTemplate.update(sql, id);
     }
+
+    /**
+     * @param localDate date
+     * @param personal_id staff ID
+     * @param stations_id station ID
+     * @param skift_id shift ID
+     * Runs the stored procedure "nytt_schema" from DB with parameters.
+     * Adds a new schedule to the database.
+     */
     public void addToScheme(LocalDate localDate, int personal_id, int stations_id, int skift_id)
     {
         String sql = "CALL nytt_schema (?,?,?,?)";
         jdbcTemplate.update(sql, personal_id, stations_id, localDate, skift_id);
     }
 
+    /**
+     * @return a list of new shift objects with values from the DB
+     */
     public List findSkift()
     {
         String sql = "SELECT * FROM skift";
@@ -53,6 +74,9 @@ public class StaffScheduleService {
         }
     }
 
+    /**
+     * @return a list of ScheduleViewModels(The grid in scheduleView is filled with the objects) with values from a view.
+     */
     public List findScheduleList()
     {
         String sql = "SELECT * FROM personal_schema";
