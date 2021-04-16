@@ -28,6 +28,12 @@ public class HomePageView extends VerticalLayout {
     Button button = new Button("Personal");
     Button button1 = new Button("Kund");
 
+
+    /**
+     * A simplified UI of the landingpage. This is where you are routed when you launch the program.
+     */
+
+
     public HomePageView(){
 
         HorizontalLayout layout = new HorizontalLayout();
@@ -61,6 +67,12 @@ public class HomePageView extends VerticalLayout {
         add(button1);
 
         }
+
+
+    /**
+     * When you press the "Personal" button, you are greeted with an login overlay.
+     * This overlay responds to the authorized username and password added in the SecurityConfiguration class.
+     */
 
 
     public void newOverlay()

@@ -20,6 +20,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_URL = "/login";
     private static final String LOGOUT_SUCCESS_URL = "/login";
 
+    /**
+     * The main security function for allowing users to login or redirects a non-user to the /login route.
+     * @param http
+     * @throws Exception
+     */
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
@@ -35,6 +41,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .failureUrl(LOGIN_FAILURE_URL)
                 .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
     }
+
+    /**
+     * Users allowed to access the "Personal" views. The LoginOverlay accepts any of these userdetails.
+     * @return
+     */
 
     @Bean
     @Override
