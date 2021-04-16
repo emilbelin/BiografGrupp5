@@ -19,6 +19,13 @@ public class LoginView extends VerticalLayout {
     HorizontalLayout layout = new HorizontalLayout();
     Button button = new Button("Tillbaka");
 
+    /**
+     * If someone tries to access the secured content of the site, per example the movie view or the schedule view,
+     * you are directed to this route which tells you that you've entered the wrong username or password.
+     * A button was added to take you back to the landing page.
+     */
+
+
     public LoginView() {
         addClassName("login-view");
         setSizeFull();

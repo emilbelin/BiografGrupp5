@@ -11,6 +11,10 @@ import java.util.stream.Stream;
 
 public class SecurityUtils {
 
+    /**
+     * A security function that checks if someone has logged in to the website or not.
+     */
+
     private SecurityUtils() {}
 
     static boolean isFrameworkInternalRequest(HttpServletRequest request) {
