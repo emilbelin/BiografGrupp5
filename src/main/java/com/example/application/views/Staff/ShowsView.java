@@ -20,17 +20,26 @@ public class ShowsView extends VerticalLayout {
 
     protected Grid<ShowViewModel> grid = new Grid<>(ShowViewModel.class);
     protected SingleSelect<Grid<ShowViewModel>, ShowViewModel> select = grid.asSingleSelect();
+
     protected ShowService showService;
     protected ShowForm form;
     protected MovieService movieService;
 
     protected Button add = new Button("Lägg till");
     protected Button delete = new Button("Ta bort");
+
+
+    /**
+     * @param showService fetches data from the database
+     * @param movieService -||-
+     * The view where staff can add and remove shows.
+     */
     public ShowsView(ShowService showService, MovieService movieService)
     {
         this.showService = showService;
         this.movieService = movieService;
         this.form = new ShowForm(showService, movieService, this);
+
         form.setVisible(false);
         HorizontalLayout buttonLayout = new HorizontalLayout();
         buttonLayout.add(add,delete);
@@ -45,8 +54,9 @@ public class ShowsView extends VerticalLayout {
     }
 
 
-
-
+    /**
+     * Fills the grid in the view with Shows from the mySQL database
+     */
     public void populateGrid()
     {
         grid.setItems(showService.findForestallningView());
@@ -61,11 +71,21 @@ public class ShowsView extends VerticalLayout {
         delete.addClickListener(event -> form.deleteShow());
     }
 
+
+    /**
+     * @param bool true to set form to visible, false to hide
+     * @param state ENUMS for deciding which buttons the form should have ( Adding, Editing, None )
+     *              Hides/Shows the form and configures the form functionality depending on action
+     */
     public void formVisibility(Boolean bool, formState state)
     {
         form.setVisible(bool);
         form.configureForm(state, form);
     }
+
+    /**
+     * @return the selected grid item
+     */
     public ShowViewModel getSelection()
     {
         return select.getValue();

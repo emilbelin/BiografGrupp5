@@ -10,13 +10,10 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.example.application.Backend.model.Customer;
-import com.vaadin.flow.dom.Style;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookingForm extends FormLayout {
@@ -44,6 +41,11 @@ public class BookingForm extends FormLayout {
 
     protected HorizontalLayout buttonLayout = new HorizontalLayout();
 
+    /**
+     * @param bookingService
+     * @param bookingView
+     * The form for the Booking view.
+     */
     public BookingForm(BookingService bookingService, BookingView bookingView)
     {
         customers = bookingService.findCustomers();
@@ -64,49 +66,72 @@ public class BookingForm extends FormLayout {
         this.setVisible(false);
     }
 
+    /**
+     * @return the int to determine which function should run
+     *  First - check if the phone number is valid
+     * 3 checks - * Does the field phone number match the current customer in the list? returnvalue = 1
+     *            * If it does match, does the field names match the customer names? returnvalue =  2
+     *            * If neither the number nor the names match, returnvalue = 3.
+     */
     //Fixme dåligt kodat
-    private int FrankensteinsMonster()
+    public int FrankensteinsMonster()
     {
-        int returnValue = 0;
-        for(Customer customer: customers)
-        {
+        if(phone.getValue().length() == 10) {
+            int returnValue = 0;
+            for (Customer customer : customers) {
 
-            if (phone.getValue().equals(customer.getTelefonnummer())) {
-                returnValue += 1;
+                if (phone.getValue().equals(customer.getTelefonnummer())) {
+                    returnValue += 1;
+                }
+                if (first_Name.getValue().equals(customer.getFornamn()) && last_Name.getValue().equals(customer.getEfternamn())) {
+                    returnValue += 1;
+                }
             }
-            if(first_Name.getValue().equals(customer.getFornamn()) && last_Name.getValue().equals(customer.getEfternamn()))
+            //In case there are multiple customers with the same name
+            if (returnValue > 2) {
+                returnValue = 2;
+            }
+            return returnValue;
+        }
+        else
             {
-                returnValue += 1;
+                return 3;
             }
-        }
-
-        if(returnValue > 2)
-        {
-            returnValue = 2;
-        }
-        return returnValue;
 
     }
 
+    /**
+     * Returns the result of the  FrankensteinsMonster function and calls a specific function depending on the result.
+     */
     public void CheckForNameAndPhone()
     {
         switch (FrankensteinsMonster())
         {
             case(0):
-                nyKundBiljett();
+                newCustomerTicket();
                 break;
             case(1):
-                kundFinnsRedanError();
+                customerAlreadyExistError();
                 break;
             case(2):
-                existerandeKundBiljett();
+                existingCustomerTicket();
+                break;
+            case(3):
+                showPhoneError("Error: Telefonnummer måste vara ett tiosifrigt nummer");
                 break;
             default:
                 System.out.println("fel");
         }
     }
 
-    public void existerandeKundBiljett()
+
+    /**
+     * Adds a new booking in the database related to the customer by id
+     * prints notification
+     * refreshes the grid in the bookingview
+     * hides the form
+     */
+    public void existingCustomerTicket()
     {
         int tempInt = bookingService.findWithPhoneNumber(phone.getValue());
         bookingService.addBooking(tempInt, paymentPicker.getValue().getId(), bookingView.getSelection().getId(), chairPicker.getValue().getId());
@@ -115,14 +140,24 @@ public class BookingForm extends FormLayout {
         bookingView.populateGrid();
     }
 
-    public void kundFinnsRedanError()
+
+    /**
+     * Prints an error if the user tries to book a ticket with an already existing phonenumber, but not matching names.
+     */
+    public void customerAlreadyExistError()
     {
         addNotification("Var god använd ett annat telefonnummer");
         customers = bookingService.findCustomers();
         phone.setValue("");
     }
 
-    public void nyKundBiljett()
+    /**
+     * Creates a new customer in the DB
+     * Creates a new booking related to the new customer by ID
+     * prints notification
+     * refreshes the grid in the booking view
+     */
+    public void newCustomerTicket()
     {
         bookingService.addCustomer(first_Name.getValue(), last_Name.getValue(), phone.getValue());
         int tempInt = bookingService.findWithPhoneNumber(phone.getValue());
@@ -133,6 +168,9 @@ public class BookingForm extends FormLayout {
         bookingView.populateGrid();
     }
 
+    /**
+     * @param message the message to print in the notification
+     */
     public void addNotification(String message)
     {
         HorizontalLayout horizontalLayout = new HorizontalLayout();
@@ -146,6 +184,24 @@ public class BookingForm extends FormLayout {
         notify.add(horizontalLayout);
         notificationButton.setVisible(true);
         notify.open();
+    }
+
+    /**
+     * @param message the message to print in the notification
+     */
+    public void showPhoneError(String message)
+    {
+            HorizontalLayout horizontalLayout = new HorizontalLayout();
+            Label label = new Label(message);
+            label.setWidthFull();
+            Notification notify = new Notification();
+            notify.setPosition(Notification.Position.MIDDLE);
+            Button notificationButton = new Button("Close");
+            horizontalLayout.add(label, notificationButton);
+            notificationButton.addClickListener(event -> notify.close());
+            notify.add(horizontalLayout);
+            notificationButton.setVisible(true);
+            notify.open();
     }
 
     private void clearForm()
@@ -183,6 +239,11 @@ public class BookingForm extends FormLayout {
         }
     }
 
+    /**
+     * Binds the firstname,lastname and phone fields to the Customer object
+     * Binds the comboBox fields to the BookingObject object.
+     *
+     */
     public void ConfigureBinder()
     {
         binderCustomer.forField(first_Name).bind(Customer::getFornamn, Customer::setFornamn);

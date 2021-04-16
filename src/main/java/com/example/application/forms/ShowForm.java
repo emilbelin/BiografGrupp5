@@ -40,11 +40,19 @@ public class ShowForm extends FormLayout {
     protected ShowService showService;
     protected MovieService movieService;
     protected ShowsView showView;
+
+    /**
+     * @param showService
+     * @param movieService
+     * @param showView
+     * The form for allowing editing/adding/deleting of shows in the showView.
+     */
     public ShowForm(ShowService showService, MovieService movieService, ShowsView showView)
     {
         this.showView = showView;
         this.showService = showService;
         this.movieService = movieService;
+
         configureBinder();
         configureButtons();
         configureButtonListener();
@@ -64,6 +72,10 @@ public class ShowForm extends FormLayout {
         cancel.addThemeVariants(ButtonVariant.LUMO_ERROR);
         clear.addThemeVariants(ButtonVariant.LUMO_ERROR);
     }
+
+    /**
+     * Sets up the click functionality for buttons
+     */
     public void configureButtonListener()
     {
         add.addClickListener(event -> addShow());
@@ -77,6 +89,13 @@ public class ShowForm extends FormLayout {
         this.setVisible(false);
     }
 
+    /**
+     * @param state
+     * @param form
+     * Depending on the ENUM state value(adding, editing, none) ->
+     * Configure the form to allow either adding, editing shows
+     * or hide the form if state.none.
+     */
     public void configureForm(formState state, ShowForm form)
     {
         form.remove(moviePicker, cinemaPicker, loungePicker, timePicker, datePicker, buttonLayout);
@@ -111,6 +130,10 @@ public class ShowForm extends FormLayout {
     {
         return new HorizontalLayout(save, clear);
     }
+
+    /**
+     * Bind form fields to object variables
+     */
     public void configureBinder()
     {
         binder.forField(moviePicker).bind(ShowObject::getMovie, ShowObject::setMovie);
@@ -119,6 +142,7 @@ public class ShowForm extends FormLayout {
         binder.forField(timePicker).bind(ShowObject::getTime, ShowObject::setTime);
         binder.forField(datePicker).bind(ShowObject::getDate, ShowObject::setDate);
     }
+
     public void clearShow()
     {
         show = new ShowObject(null,null,null,null,null);
@@ -132,20 +156,30 @@ public class ShowForm extends FormLayout {
        showView.populateGrid();
     }
 
+    /**
+     * Calls a stored procedure in the database which takes in parameters, in this case the form field values.
+     */
     public void addShow()
     {
-       // showService.addToShow();
         showService.addToShow(moviePicker.getValue().getId(), loungePicker.getValue().getId(), timePicker.getValue().toString(), datePicker.getValue());
         showView.populateGrid();
     }
+
+    /**
+     * Fills comboboxes with data and change what is displayed in the combobox
+     */
     private void configureComboBoxes()
     {
         timePicker.setLocale(Locale.GERMAN);
+
         moviePicker.setItemLabelGenerator(Movie::getTitel);
         moviePicker.setItems(movieService.findAll());
 
         cinemaPicker.setItemLabelGenerator(Cinema::getNamn);
         cinemaPicker.setItems(showService.findCinemas());
+
+        // Everytime you select a new cinema, set up the loungePicker field with ->
+        // -> lounges related to the selected cinema
         cinemaPicker.addValueChangeListener(event ->
         {
             if (event.getValue() == null)

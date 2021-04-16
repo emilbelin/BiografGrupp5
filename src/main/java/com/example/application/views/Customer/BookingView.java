@@ -23,6 +23,11 @@ public class BookingView extends VerticalLayout {
     protected Grid<ShowViewModel> grid = new Grid<>(ShowViewModel.class);
     protected SingleSelect<Grid<ShowViewModel>, ShowViewModel> select = grid.asSingleSelect();
 
+    /**
+     * @param showService
+     * @param bookingService
+     * The view where customers can book a ticket for shows.
+     */
     public BookingView(ShowService showService,BookingService bookingService)
     {
         this.bookingService = bookingService;
@@ -39,22 +44,36 @@ public class BookingView extends VerticalLayout {
         add(grid, form);
     }
 
+    /**
+     * @return returns the selected grid item
+     */
     public ShowViewModel getSelection()
     {
         return select.getValue();
     }
 
+    /**
+     * Fills the grid with shows
+     */
     public void populateGrid()
     {
         grid.setItems(showService.findForestallningView());
     }
 
+    /**
+     * This function runs everytime the user selects/deselects a grid item.
+     * Depending on if the selected item is null, bool becomes true or false.
+     * if bool is false the form will be set to visible(false) and otherwise visible(true)
+     * If the selected value is null and there is less then 1 chair left on the booking ->
+     * -> print notification with error
+     */
     public void selectHandler()
     {
         boolean bool;
         bool = select.getValue() != null;
         form.toggleForm(bool);
         form.ConfigureRowPicker(bool);
+
         if(select.getValue() != null)
         {
             if(select.getValue().getPlatser_kvar() < 1)

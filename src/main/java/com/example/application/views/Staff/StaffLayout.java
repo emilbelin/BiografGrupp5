@@ -17,11 +17,18 @@ import javax.swing.plaf.basic.BasicTabbedPaneUI;
 
 @CssImport("./styles/shared-styles.js")
 public class StaffLayout extends AppLayout {
+    /**
+     * The common layout between all "Staff" pages.
+     * Contains
+     * a Header with a logo and a "back" button
+     * a Drawer containing links to the staff pages.
+     */
     public StaffLayout()
     {
         createHeader();
         createDrawer();
     }
+
 
     private void createHeader()
     {
