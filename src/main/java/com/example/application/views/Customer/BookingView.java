@@ -58,12 +58,12 @@ public class BookingView extends VerticalLayout {
                 form.addNotification("Inga platser kvar!");
                 form.setVisible(false);
             }
-        }
-        else {
-            boolean bool;
-            bool = select.getValue() != null;
-            form.toggleForm(bool);
-            form.ConfigureRowPicker(bool);
+            else {
+             boolean bool;
+             bool = select.getValue() != null;
+             form.toggleForm(bool);
+             form.ConfigureRowPicker(bool);
+         }
         }
     }
 }
