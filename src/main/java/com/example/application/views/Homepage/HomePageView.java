@@ -35,7 +35,9 @@ public class HomePageView extends VerticalLayout {
         Image img=new Image("images/javabio.png", "My App logo");
         viewTitle = new H1("Javagruppens Biograf");
 
+
         add(viewTitle, img);
+        
 
         layout.setId("logo");
         layout.setAlignItems(Alignment.CENTER);
